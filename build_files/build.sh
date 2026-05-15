@@ -17,8 +17,9 @@ cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
     )" \
 >/usr/share/ublue-os/image-info.json
 
-# store parent release so we can add it to here
-UPSTREAM_IMAGE_ID=$(grep -oP '^IMAGE_ID="\K[^"]+' /etc/os-release)
+# store upstream information so we can preserve it
+UPSTREAM_IMAGE_ID=$(grep -oP '^IMAGE_ID=\K.+' /etc/os-release)
+SUPPORT_END=$(grep -oP '^SUPPORT_END=\K.+' /etc/os-release)
 rm -f /usr/lib/os-release
 cat >/usr/lib/os-release << EOL
 NAME="Theledora"
@@ -32,13 +33,15 @@ PRETTY_NAME="Theledora"
 ANSI_COLOR="0;38;2;240;30;160"
 CPE_NAME="cpe:/o:theleruby:theledora:${MATRIX_FEDORA_VERSION}"
 DEFAULT_HOSTNAME="theledora"
+HOME_URL="https://github.com/Theleruby/theledora"
 BUG_REPORT_URL="https://github.com/Theleruby/theledora/issues"
+SUPPORT_END=${SUPPORT_END}
 VARIANT="${MATRIX_VARIANT}"
 VARIANT_ID="${MATRIX_VARIANT}"
 OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
 BOOTLOADER_NAME="Theledora"
 IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}"
-UPSTREAM_IMAGE_ID="${UPSTREAM_IMAGE_ID}"
+UPSTREAM_IMAGE_ID=${UPSTREAM_IMAGE_ID}
 VENDOR_NAME="theleruby"
 VENDOR_URL="https://www.theleruby.com"
 EOL
