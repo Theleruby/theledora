@@ -87,6 +87,7 @@ jobs:
           # https://artifacthub.io/docs/topics/repositories/container-images/
           # https://linux.die.net/man/1/date
           echo "date=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)" >> $GITHUB_OUTPUT
+          echo "date_short=$(date -u +%Y\%m\%d)" >> $GITHUB_OUTPUT
 
       # Image metadata for https://artifacthub.io/ - This is optional but is highly recommended so we all can get a index of all the custom images
       # The metadata by itself is not going to do anything, you choose if you want your image to be on ArtifactHub or not.
@@ -97,7 +98,7 @@ jobs:
           # This generates all the tags for your image, you can add custom tags here too!
           tags: |
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}
-            type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}.{{date 'YYYYMMDD'}}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
@@ -109,7 +110,7 @@ jobs:
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/tree/${{ github.sha }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
-            org.opencontainers.image.version=${{ matrix.variant }}-${{ matrix.tag }}.{{date 'YYYYMMDD'}}
+            org.opencontainers.image.version=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}
             io.artifacthub.package.deprecated=false
             io.artifacthub.package.keywords=${{ env.IMAGE_KEYWORDS }}
             io.artifacthub.package.license=Apache-2.0
@@ -134,7 +135,7 @@ jobs:
             MATRIX_FEDORA_VERSION=${{ matrix.fedora_version }}
             MATRIX_RELEASE_TYPE=${{ matrix.release_type }}
             GITHUB_BRANCH=${{ steps.extract_branch.outputs.branch }}
-            BUILD_DATE={{date 'YYYYMMDD'}}
+            BUILD_DATE=${{ steps.date.outputs.date_short }}
           # Postfix image name with -custom to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
           image: ${{ env.IMAGE_NAME }}
