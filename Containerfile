@@ -11,6 +11,13 @@ COPY build_files /
 # Base Image
 FROM ghcr.io/ublue-os/${MATRIX_PARENT_IMAGE}:${MATRIX_TAG}
 
+# We have to reload the args after using FROM
+ARG MATRIX_TYPE
+ARG MATRIX_VARIANT
+ARG MATRIX_PARENT_IMAGE
+ARG MATRIX_TAG
+ARG MATRIX_VERSION
+
 # Build script
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
