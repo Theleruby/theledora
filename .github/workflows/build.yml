@@ -36,11 +36,11 @@ jobs:
 
     strategy:
       matrix:
-        type: [desktop, gamescope]
-        variant: [desktop-nvidia-open, gamescope]
-        parent_image: [bazzite-nvidia-open, bazzite-deck]
-        tag: [stable-43, stable-44]
-        version: [43, 44]
+        #type: [desktop, gamescope]
+        #variant: [desktop-nvidia-open, gamescope]
+        #parent_image: [bazzite-nvidia-open, bazzite-deck]
+        #tag: [stable-43, stable-44]
+        #version: [43, 44]
         include:
         - type: desktop
           variant: desktop-nvidia-open
