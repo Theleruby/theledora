@@ -193,6 +193,9 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
   systemctl enable docker.service containerd.service
 fi
 
+# remove unwanted stuff
+rm -f /usr/share/applications/discourse.desktop
+
 if [ "$MATRIX_TYPE" == "gamescope" ]; then
   # remove HHD as I don't want or need it
   dnf5 -y remove hhd hhd-ui
