@@ -2,6 +2,70 @@
 
 set -ouex pipefail
 
+#======================================
+# apply branding
+#======================================
+rm -f /usr/share/ublue-os/image-info.json
+cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
+              .\"image-vendor\" |= \"theleruby\" |
+              .\"image-ref\" |= \"ostree-image-signed:docker://ghcr.io/theleruby/theledora\" |
+              .\"image-tag\" |= \"${MATRIX_VARIANT}-${MATRIX_TAG}\" |
+              .\"image-branch\" |= \"${GITHUB_BRANCH}\" |
+              .\"base-image-name\" |= \"${MATRIX_FEDORA_EDITION}\" |
+              .\"fedora-version\" |= \"${MATRIX_FEDORA_VERSION}\" |
+              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}\"" \
+    )" \
+>/usr/share/ublue-os/image-info.json
+
+rm -f /usr/lib/os-release
+cat >/usr/lib/os-release << EOL
+NAME="Theledora"
+VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
+RELEASE_TYPE="${MATRIX_RELEASE_TYPE}"
+ID="theledora"
+ID_LIKE="rhel fedora bazzite"
+VERSION_ID="${MATRIX_FEDORA_VERSION}"
+VERSION_CODENAME="${MATRIX_FEDORA_EDITION}"
+PRETTY_NAME="Theledora"
+ANSI_COLOR="0;38;2;240;30;160"
+CPE_NAME="cpe:/o:theleruby:theledora:${MATRIX_FEDORA_VERSION}"
+DEFAULT_HOSTNAME="theledora"
+BUG_REPORT_URL="https://github.com/Theleruby/theledora/issues/"
+VARIANT="${MATRIX_VARIANT}"
+VARIANT_ID="${MATRIX_VARIANT}"
+OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
+BOOTLOADER_NAME="Theledora"
+IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}"
+VENDOR_NAME="theleruby"
+VENDOR_URL="https://www.theleruby.com/"
+EOL
+
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+rm -f /etc/xdg/kcm-about-distrorc
+cat >/etc/xdg/kcm-about-distrorc << EOL
+[General]
+Name=Theledora
+LogoPath=
+Website=https://github.com/Theleruby/theledora
+Version=${MATRIX_FEDORA_VERSION}.${BUILD_DATE}
+Variant=${MATRIX_VARIANT}-${MATRIX_TAG}
+EOL
+fi
+
+rm -f /usr/lib/fedora-release
+cat >/usr/lib/fedora-release << EOL
+Theledora release ${MATRIX_FEDORA_VERSION}
+EOL
+#======================================
+
+# print file contents for debugging
+cat /usr/share/ublue-os/image-info.json
+cat /usr/lib/os-release
+cat /etc/xdg/kcm-about-distrorc
+cat /usr/lib/fedora-release
+
+#======================================
+
 # make sure /var/opt directory exists so we can install stuff into it
 mkdir -p /var/opt
 
