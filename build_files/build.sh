@@ -79,10 +79,14 @@ mkdir -p /var/opt
 dnf5 install -y fedora-workstation-repositories
 
 # make sure rpmfusion is enabled
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+  dnf5 install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${MATRIX_FEDORA_VERSION}.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${MATRIX_FEDORA_VERSION}.noarch.rpm
+fi
 dnf5 config-manager setopt rpmfusion-free.enabled=1
 dnf5 config-manager setopt rpmfusion-free-updates.enabled=1
 dnf5 config-manager setopt rpmfusion-nonfree.enabled=1
 dnf5 config-manager setopt rpmfusion-nonfree-updates.enabled=1
+dnf5 config-manager setopt fedora-cisco-openh264.enabled=1
 dnf5 install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 
 # htop
