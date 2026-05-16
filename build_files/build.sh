@@ -125,6 +125,9 @@ dnf5 install -y google-chrome-stable
 
 # mercurial
 dnf5 install -y mercurial tortoisehg python3-dulwich kdiff3
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+  dnf5 -y swap mercurial https://kojipkgs.fedoraproject.org//packages/mercurial/7.1.1/2.fc43/x86_64/mercurial-7.1.1-2.fc43.x86_64.rpm
+fi
 
 # fluidsynth
 dnf5 install -y fluidsynth fluid-soundfont-common fluid-soundfont-gm
