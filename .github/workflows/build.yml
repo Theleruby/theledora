@@ -35,6 +35,7 @@ jobs:
       id-token: write
 
     strategy:
+      fail-fast: false
       matrix:
         #type: [desktop, gamescope]
         #variant: [desktop-nvidia-open, gamescope]
