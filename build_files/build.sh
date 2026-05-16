@@ -5,17 +5,18 @@ set -ouex pipefail
 #======================================
 # apply branding
 #======================================
-rm -f /usr/share/ublue-os/image-info.json
-cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
-              .\"image-vendor\" |= \"theleruby\" |
-              .\"image-ref\" |= \"ostree-image-signed:docker://ghcr.io/theleruby/theledora\" |
-              .\"image-tag\" |= \"${MATRIX_VARIANT}-${MATRIX_TAG}\" |
-              .\"image-branch\" |= \"${GITHUB_BRANCH}\" |
-              .\"base-image-name\" |= \"${MATRIX_FEDORA_EDITION}\" |
-              .\"fedora-version\" |= \"${MATRIX_FEDORA_VERSION}\" |
-              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}\"" \
-    )" \
->/usr/share/ublue-os/image-info.json
+# the image-info.json is used by various scripts to do stuff and editing it borks things. for now, don't.
+#rm -f /usr/share/ublue-os/image-info.json
+#cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
+#              .\"image-vendor\" |= \"theleruby\" |
+#              .\"image-ref\" |= \"ostree-image-signed:docker://ghcr.io/theleruby/theledora\" |
+#              .\"image-tag\" |= \"${MATRIX_VARIANT}-${MATRIX_TAG}\" |
+#              .\"image-branch\" |= \"${GITHUB_BRANCH}\" |
+#              .\"base-image-name\" |= \"${MATRIX_FEDORA_EDITION}\" |
+#              .\"fedora-version\" |= \"${MATRIX_FEDORA_VERSION}\" |
+#              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}\"" \
+#    )" \
+#>/usr/share/ublue-os/image-info.json
 
 # store upstream information so we can preserve it
 UPSTREAM_IMAGE_ID=$(grep -oP '^IMAGE_ID=\K.+' /etc/os-release)
