@@ -166,11 +166,25 @@ dnf5 install -y cabextract fontconfig
 dnf5 install -y gnu-free-fonts-common gnu-free-sans-fonts lpf-cleartype-fonts lpf-mscore-fonts lpf-mscore-tahoma-fonts
 rm /usr/share/applications/lpf*.desktop
 
+# java (jdk8 required for minecraft 1.7.10, also install latest)
+dnf5 install -y https://cdn.azul.com/zulu/bin/zulu8.94.0.17-ca-fx-jdk8.0.492-linux.x86_64.rpm
+dnf5 install -y java-25-openjdk-devel.x86_64
+cat >/usr/share/applications/java-8-openjdk-jconsole.desktop << EOL
+[Desktop Entry]
+Name=OpenJDK 8 for x86_64 Monitoring & Management Console (8.0.492-zulu8.94.0.17-ca-fx.x86_64)
+Comment=Monitor and manage OpenJDK applications
+Exec=/usr/lib/jvm/java-8-zulu-openjdk-jdk-fx/bin/jconsole
+Icon=java-25-openjdk
+Terminal=false
+Type=Application
+StartupWMClass=sun-tools-jconsole-JConsole
+Categories=Development;Profiling;Java;
+Version=1.0
+X-Desktop-File-Install-Version=0.28
+EOL
+
 # stuff specific to desktop variants
 if [ "$MATRIX_TYPE" == "desktop" ]; then
-  # java
-  dnf5 install -y java-25-openjdk-devel.x86_64
-
   # docker
   dnf5 config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
   dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
