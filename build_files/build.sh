@@ -113,6 +113,9 @@ dnf5 install -y alsa-plugins-a52
 # libdvdcss for dvd playback
 dnf5 install -y libdvdcss
 
+# required for mounting windows dynamic disk volumes
+dnf5 install -y libldm
+
 # python
 dnf5 install -y python3-devel
 
