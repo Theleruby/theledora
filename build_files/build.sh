@@ -163,7 +163,7 @@ rm /usr/share/applications/lpf*.desktop
 # stuff specific to desktop variants
 if [ "$MATRIX_TYPE" == "desktop" ]; then
   # java
-  dnf5 install -y java-21-openjdk-devel.x86_64 java-25-openjdk-devel.x86_64
+  dnf5 install -y java-25-openjdk-devel.x86_64
 
   # docker
   dnf5 config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
