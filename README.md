@@ -33,7 +33,7 @@ To install the upstream version:
 https://download.bazzite.gg/bazzite-nvidia-open-stable-live-amd64.iso
 
 To switch to this variant afterwards:
-`sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:desktop-nvidia-open-stable-43`
+`sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:desktop-nvidia-open-stable`
 
 ### Handheld/HTPC variants
 
@@ -51,11 +51,7 @@ To install the upstream version:
 https://download.bazzite.gg/bazzite-deck-stable-live-amd64.iso
 
 To switch to this variant afterwards:
-`sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:gamescope-stable-43`
-
-## When will this be updated to Fedora 44?
-
-I'm giving it a few months for the bugs to be ironed out first. Once the update is available you will (for now) have to switch to it manually.
+`sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:gamescope-stable`
 
 ## Documentation
 

@@ -40,6 +40,8 @@ jobs:
         #variant: [desktop-nvidia-open, gamescope]
         #parent_image: [bazzite-nvidia-open, bazzite-deck]
         #tag: [stable-43, stable-44]
+        #tag2: [stable, none]
+        #tag3: [latest, none]
         #fedora_version: [43, 44]
         #fedora_edition: [silverblue, kinoite]
         #release_type: [stable, lts, development, experiment]
@@ -48,13 +50,26 @@ jobs:
           variant: desktop-nvidia-open
           parent_image: bazzite-nvidia-open
           tag: stable-43
+          tag2: none
+          tag3: none
           fedora_version: 43
+          fedora_edition: kinoite
+          release_type: stable
+        - type: desktop
+          variant: desktop-nvidia-open
+          parent_image: bazzite-nvidia-open
+          tag: stable-44
+          tag2: stable
+          tag3: latest
+          fedora_version: 44
           fedora_edition: kinoite
           release_type: stable
         - type: gamescope
           variant: gamescope
           parent_image: bazzite-deck
           tag: stable-43
+          tag2: stable
+          tag3: latest
           fedora_version: 43
           fedora_edition: kinoite
           release_type: stable
@@ -99,6 +114,10 @@ jobs:
           tags: |
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag2 }},enable=${{ matrix.tag2 != 'none' }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag2 }}.${{ steps.date.outputs.date_short }},enable=${{ matrix.tag2 != 'none' }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag3 }},enable=${{ matrix.tag3 != 'none' }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag3 }}.${{ steps.date.outputs.date_short }},enable=${{ matrix.tag3 != 'none' }}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
