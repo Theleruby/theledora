@@ -147,7 +147,8 @@ dnf5 install -y zerotier-one
 dnf5 install -y libreoffice libreoffice-kf6 libreoffice-help-en
 
 # discord
-dnf5 install -y discord
+dnf5 install -y https://discord.com/api/download?platform=linux&format=rpm
+dnf5 install -y https://discord.com/api/download/ptb?platform=linux&format=rpm
 
 # audacity
 dnf5 install -y audacity-freeworld
