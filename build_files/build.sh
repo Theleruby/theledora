@@ -134,6 +134,9 @@ fi
 # fluidsynth
 dnf5 install -y fluidsynth fluid-soundfont-common fluid-soundfont-gm
 
+# audacious
+dnf5 install -y audacious audacious-plugins libopenmpt
+
 # vlc
 dnf5 install -y vlc vlc-plugins-all vlc-plugin-kde vlc-plugin-notify vlc-plugin-pipewire vlc-plugins-freeworld
 
