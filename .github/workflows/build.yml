@@ -47,15 +47,15 @@ jobs:
         #fedora_edition: [silverblue, kinoite]
         #release_type: [stable, lts, development, experiment]
         include:
-        - type: desktop
-          variant: desktop-nvidia-open
-          parent_image: bazzite-nvidia-open
-          tag: stable-43
-          tag2: none
-          tag3: none
-          fedora_version: 43
-          fedora_edition: kinoite
-          release_type: stable
+        #- type: desktop
+        #  variant: desktop-nvidia-open
+        #  parent_image: bazzite-nvidia-open
+        #  tag: stable-43
+        #  tag2: none
+        #  tag3: none
+        #  fedora_version: 43
+        #  fedora_edition: kinoite
+        #  release_type: stable
         - type: desktop
           variant: desktop-nvidia-open
           parent_image: bazzite-nvidia-open
