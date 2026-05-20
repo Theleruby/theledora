@@ -1,5 +1,10 @@
 ---
 name: Build container images
+run-name: ${{ github.event_name == 'pull_request' && format('[#{0}] {1}', github.event.pull_request.number, github.event.pull_request.title)
+           || github.event_name == 'schedule' && 'Daily build of container images'
+           || github.event_name == 'push' && github.event.head_commit.message
+           || github.event_name == 'workflow_dispatch' && 'Manual build of container images'
+           || '' }}
 on:
   pull_request:
     branches:
