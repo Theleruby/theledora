@@ -164,9 +164,9 @@ dnf5 install -y audacity-freeworld
 # avidemux
 if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
 # broken on bazzite 44 now. use appimage
-wget http://stuff.theleruby.com/AppImage/avidemux_2.8.1.AppImage -O /usr/bin/avidemux.AppImage
+wget https://stuff.theleruby.com/AppImage/avidemux_2.8.1.AppImage -O /usr/bin/avidemux.AppImage
 chmod +x /usr/bin/avidemux.AppImage
-wget http://stuff.theleruby.com/AppImage/org.avidemux.Avidemux.png -O /usr/share/icons/hicolor/128x128/apps/org.avidemux.Avidemux.png
+wget https://stuff.theleruby.com/AppImage/org.avidemux.Avidemux.png -O /usr/share/icons/hicolor/128x128/apps/org.avidemux.Avidemux.png
 cat >/usr/share/applications/org.avidemux.Avidemux.desktop << EOL
 [Desktop Entry]
 Name=Avidemux
