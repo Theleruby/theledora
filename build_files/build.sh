@@ -138,7 +138,12 @@ dnf5 install -y fluidsynth fluid-soundfont-common fluid-soundfont-gm
 dnf5 install -y audacious audacious-plugins audacious-plugins-freeworld libopenmpt
 
 # vlc
-dnf5 install -y vlc vlc-plugins-all vlc-plugin-kde vlc-plugin-notify vlc-plugin-pipewire vlc-plugins-freeworld
+dnf5 install -y vlc vlc-plugins-all vlc-plugin-kde vlc-plugin-notify vlc-plugin-pipewire
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+  dnf5 install -y https://mirrors.neterra.net/rpmfusion/free/fedora/development/rawhide/Everything/x86_64/os/Packages/v/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
+else
+  dnf5 install -y vlc-plugins-freeworld
+fi
 
 # yt-dlp
 dnf5 install -y yt-dlp
@@ -157,7 +162,26 @@ dnf5 install -y https://discord.com/api/download/ptb?platform=linux\&format=rpm
 dnf5 install -y audacity-freeworld
 
 # avidemux
-dnf5 install -y avidemux
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+# broken on bazzite 44 now. use appimage
+wget http://stuff.theleruby.com/AppImage/avidemux_2.8.1.AppImage -O /usr/bin/avidemux.AppImage
+chmod +x /usr/bin/avidemux.AppImage
+wget http://stuff.theleruby.com/AppImage/org.avidemux.Avidemux.png -O /usr/share/icons/hicolor/128x128/apps/org.avidemux.Avidemux.png
+cat >/usr/share/applications/org.avidemux.Avidemux.desktop << EOL
+[Desktop Entry]
+Name=Avidemux
+GenericName=Video Editor
+Comment=Multiplatform video editor
+Exec=/usr/bin/avidemux.AppImage %f
+Icon=org.avidemux.Avidemux
+Terminal=false
+Type=Application
+Categories=AudioVideo;AudioVideoEditing;Video;
+MimeType=video/mpeg;video/x-mpeg;video/mp4;video/x-m4v;video/quicktime;video/3gp;video/mkv;video/x-matroska;video/webm;video/flv;video/x-flv;video/dv;video/x-msvideo;video/x-ms-wmv;video/x-ms-asf;video/x-anim;
+EOL
+else
+  dnf5 install -y avidemux
+fi
 
 # krusader
 dnf5 install -y krusader
