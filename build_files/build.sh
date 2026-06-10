@@ -112,6 +112,11 @@ dnf5 install -y easyeffects calf lv2 lv2-calf-plugins lv2-mdala-plugins lv2-zam-
 # alsa plugin for dolby digital
 dnf5 install -y alsa-plugins-a52
 
+# downgrade broken alsa-ucm package
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+  dnf5 -y swap alsa-ucm https://kojipkgs.fedoraproject.org//packages/alsa-lib/1.2.15.3/4.fc44/noarch/alsa-ucm-1.2.15.3-4.fc44.noarch.rpm
+fi
+
 # libdvdcss for dvd playback
 dnf5 install -y libdvdcss
 
