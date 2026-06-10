@@ -47,7 +47,7 @@ SUPPORT_END=${SUPPORT_END}
 VARIANT="${MATRIX_VARIANT}"
 VARIANT_ID="${MATRIX_VARIANT}"
 OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
-BOOTLOADER_NAME="Theledora ${MATRIX_FEDORA_VERSION} (${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE})"
+BOOTLOADER_NAME="Theledora"
 BUILD_ID="${MATRIX_TAG}.${BUILD_DATE}"
 IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}"
 UPSTREAM_IMAGE_ID=${UPSTREAM_IMAGE_ID}
@@ -268,3 +268,9 @@ if [ "$MATRIX_TYPE" == "gamescope" ]; then
 fi
 
 dnf5 clean all
+
+# rebuild initramfs
+KERNEL_SUFFIX=""
+QUALIFIED_KERNEL="$(dnf5 repoquery --installed --queryformat='%{evr}.%{arch}' "kernel${KERNEL_SUFFIX:+-${KERNEL_SUFFIX}}")"
+/usr/bin/dracut --no-hostonly --kver "$QUALIFIED_KERNEL" --reproducible --zstd -v --add ostree --add fido2 -f "/usr/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
+chmod 0600 /usr/lib/modules/"$QUALIFIED_KERNEL"/initramfs.img
