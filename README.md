@@ -1,5 +1,7 @@
 ![Logo](https://raw.githubusercontent.com/Theleruby/theledora/refs/heads/main/build_files/branding/theledora.svg)
 
+## What is Theledora?
+
 Theledora is a customized version of Fedora Atomic Desktop based on Bazzite, a fork of Fedora Kinoite tailored towards gamers. It comes in the form of bootc images, with several variants available for different use cases.
 
 The purpose of Theledora is to allow me to preinstall things from the Fedora package repositories which cannot be installed via flatpak, or which I found work better from the package repository. This avoids having to layer the packages using rpm-ostree, which is prone to breaking with package conflicts. Installing some of those packages also avoids me having to use containers for most of the stuff that I do (not everything, but that's OK).
