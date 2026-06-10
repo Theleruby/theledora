@@ -1,4 +1,4 @@
-# Theledora
+![Logo](https://github.com/Theleruby/theledora/blob/main/build_files/branding/theledora-full.png?raw=true)
 
 Theledora is a customized version of Fedora Atomic Desktop based on Bazzite, a fork of Fedora Kinoite tailored towards gamers. It comes in the form of bootc images, with several variants available for different use cases.
 

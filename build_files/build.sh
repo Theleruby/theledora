@@ -5,6 +5,13 @@ set -euxo pipefail
 #======================================
 # apply branding
 #======================================
+
+# copy logo files
+mkdir -p /usr/share/ublue-os/theledora/
+cp /ctx/branding/t* /usr/share/ublue-os/theledora/
+rm -f /usr/share/plymouth/themes/spinner/watermark.png
+cp /ctx/branding/watermark.png /usr/share/plymouth/themes/spinner/watermark.png
+
 # the image-info.json is used by various scripts to do stuff and editing it borks things. for now, don't.
 #rm -f /usr/share/ublue-os/image-info.json
 #cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
@@ -40,7 +47,7 @@ SUPPORT_END=${SUPPORT_END}
 VARIANT="${MATRIX_VARIANT}"
 VARIANT_ID="${MATRIX_VARIANT}"
 OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
-BOOTLOADER_NAME="Theledora"
+BOOTLOADER_NAME="Theledora ${MATRIX_FEDORA_VERSION} (${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE})"
 BUILD_ID="${MATRIX_TAG}.${BUILD_DATE}"
 IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}"
 UPSTREAM_IMAGE_ID=${UPSTREAM_IMAGE_ID}
@@ -53,7 +60,7 @@ rm -f /etc/xdg/kcm-about-distrorc
 cat >/etc/xdg/kcm-about-distrorc << EOL
 [General]
 Name=Theledora
-LogoPath=
+LogoPath=/usr/share/ublue-os/theledora/theledora-box.png
 Website=https://github.com/Theleruby/theledora
 Version=${MATRIX_FEDORA_VERSION}.${BUILD_DATE}
 Variant=${MATRIX_VARIANT}-${MATRIX_TAG}
