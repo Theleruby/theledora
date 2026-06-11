@@ -21,22 +21,6 @@ I also don't consider Theledora to be its own operating system or distro - apart
 
 ISO installers are not currently available. To install a variant, you will therefore first need to install the upstream version of Bazzite using the provided link. After installing, enter the provided switch command and then reboot. This will switch you over to Theledora.
 
-## Automatic and manual updates
-
-All images are scheduled to rebuild every day at 10AM UTC via GitHub Actions.
-
-Once a new image is available, the desktop version should automatically download and deploy it in the background. The gamescope version will offer the new image via the SteamOS update helper. You can also update to the latest version manually using either `rpm-ostree upgrade` (which updates only the bootc image) or `ujust update` (which runs [topgrade](https://github.com/topgrade-rs/topgrade) to update everything on the system). Running topgrade is generally a better option, as there are other dependencies that need to be kept in sync with the bootc image (e.g. NVIDIA Flatpak runtimes).
-
-After a new image is deployed, the system will boot into it automatically next time it starts up.
-
-### Reverting updates and pinning deployments
-
-In the event of a problem occurring with a newly deployed image, the previous one is kept available as a backup and can be selected from the boot manager menu on startup. This helps to avoid a situation where your system ends up in a broken state due to a bad update.
-
-By default, only two deployments are kept (the latest one and the previous one). You can pin a deployment in order to keep it forever by using `sudo ostree admin pin <X>` (where `<X>` is the deployment number, with 0 being the most recent).
-
-A list of all deployed images (including pending updates and pinned deployments) can be displayed using `rpm-ostree status`.
-
 ### Desktop variants
 
 These variants boot directly into a KDE Plasma desktop session. The gamescope session (Steam Gaming Mode) is not included.
@@ -68,6 +52,22 @@ https://download.bazzite.gg/bazzite-deck-stable-live-amd64.iso
 
 To switch to this variant afterwards:
 `sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:gamescope-stable`
+
+## Automatic and manual updates
+
+All images are scheduled to rebuild every day at 10AM UTC via GitHub Actions.
+
+Once a new image is available, the desktop version should automatically download and deploy it in the background. The gamescope version will offer the new image via the SteamOS update helper. You can also update to the latest version manually using either `rpm-ostree upgrade` (which updates only the bootc image) or `ujust update` (which runs [topgrade](https://github.com/topgrade-rs/topgrade) to update everything on the system). Running topgrade is generally a better option, as there are other dependencies that need to be kept in sync with the bootc image (e.g. NVIDIA Flatpak runtimes).
+
+After a new image is deployed, the system will boot into it automatically next time it starts up.
+
+### Reverting updates and pinning deployments
+
+In the event of a problem occurring with a newly deployed image, the previous one is kept available as a backup and can be selected from the boot manager menu on startup. This helps to avoid a situation where your system ends up in a broken state due to a bad update.
+
+By default, only two deployments are kept (the latest one and the previous one). You can pin a deployment in order to keep it forever by using `sudo ostree admin pin <X>` (where `<X>` is the deployment number, with 0 being the most recent).
+
+A list of all deployed images (including pending updates and pinned deployments) can be displayed using `rpm-ostree status`.
 
 ## Documentation
 
