@@ -98,11 +98,11 @@ dnf5 config-manager setopt rpmfusion-nonfree-updates.enabled=1
 dnf5 config-manager setopt fedora-cisco-openh264.enabled=1
 dnf5 install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 
-# htop
-dnf5 install -y htop
+# basic command line tools that should have just been in fedora by default
+dnf5 install -y htop execstack
 
 # dependencies for some stuff
-dnf5 install -y kdsingleapplication-qt6
+dnf5 install -y kdsingleapplication-qt6 gtk2 gtk3
 
 # fedora stuff
 dnf5 install -y mediawriter
@@ -243,6 +243,9 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
 
   # imagemagick
   dnf5 install -y ImageMagick-devel
+
+  # needed for JFXPanel swing interop, not sure which one as it wasn't clear, so just installing both
+  dnf5 install -y gtk2-devel gtk3-devel
 fi
 
 # move stuff in /var/opt to /usr/lib/opt and add symlink to tmpfiles conf
