@@ -56,6 +56,15 @@ VENDOR_URL="https://www.theleruby.com"
 EOL
 
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+#--
+cat >/usr/bin/upstream-image-id <<EOL
+#!/bin/bash
+echo "Upstream Image:"
+echo "${UPSTREAM_IMAGE_ID}"
+echo ""
+EOL
+chmod +x /usr/bin/upstream-image-id
+#--
 rm -f /etc/xdg/kcm-about-distrorc
 cat >/etc/xdg/kcm-about-distrorc << EOL
 [General]
@@ -64,7 +73,9 @@ LogoPath=/usr/share/ublue-os/theledora/theledora-box.png
 Website=https://github.com/Theleruby/theledora
 Version=${MATRIX_FEDORA_VERSION}.${BUILD_DATE}
 Variant=${MATRIX_VARIANT}-${MATRIX_TAG}
+ExtraSoftwareData=/usr/bin/upstream-image-id
 EOL
+#--
 fi
 
 rm -f /usr/lib/fedora-release
