@@ -66,19 +66,33 @@ jobs:
           parent_image: bazzite-nvidia-open
           tag: stable-44
           tag2: stable
-          tag3: latest
           fedora_version: 44
           fedora_edition: kinoite
           release_type: stable
+        - type: desktop
+          variant: desktop-nvidia-open
+          parent_image: bazzite-nvidia-open
+          tag: testing-44
+          tag2: testing
+          fedora_version: 44
+          fedora_edition: kinoite
+          release_type: development
         - type: gamescope
           variant: gamescope
           parent_image: bazzite-deck
           tag: stable-43
           tag2: stable
-          tag3: latest
           fedora_version: 43
           fedora_edition: kinoite
           release_type: stable
+        - type: gamescope
+          variant: gamescope
+          parent_image: bazzite-deck
+          tag: testing-44
+          tag2: testing
+          fedora_version: 44
+          fedora_edition: kinoite
+          release_type: development
 
     steps:
       - name: Extract branch name
