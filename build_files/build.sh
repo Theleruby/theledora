@@ -87,6 +87,7 @@ EOL
 # print file contents for debugging
 cat /usr/share/ublue-os/image-info.json
 cat /usr/lib/os-release
+cat /usr/bin/upstream-image-id
 cat /etc/xdg/kcm-about-distrorc
 cat /usr/lib/fedora-release
 
