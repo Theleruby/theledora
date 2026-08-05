@@ -148,6 +148,9 @@ dnf5 install -y python3-devel
 dnf5 config-manager setopt google-chrome.enabled=1
 dnf5 install -y google-chrome-stable
 
+# firefox
+dnf5 install -y firefox
+
 # mercurial
 dnf5 install -y mercurial tortoisehg python3-dulwich kdiff3
 if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
@@ -236,15 +239,20 @@ Version=1.0
 X-Desktop-File-Install-Version=0.28
 EOL
 
+# .net runtimes
+dnf5 install -y dotnet-runtime-8.0 dotnet-runtime-10.0
+
+# needed for JFXPanel swing interop, not sure which one as it wasn't clear, so just installing both
+dnf5 install -y gtk2-devel gtk3-devel
+
 # stuff specific to desktop variants
 if [ "$MATRIX_TYPE" == "desktop" ]; then
   # docker
   dnf5 config-manager addrepo --from-repofile https://download.docker.com/linux/fedora/docker-ce.repo
   dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
 
-  # .net
-  dnf5 install -y dotnet-sdk-8.0 dotnet-runtime-8.0
-  dnf5 install -y dotnet-sdk-10.0 dotnet-runtime-10.0
+  # .net sdk
+  dnf5 install -y dotnet-sdk-8.0 dotnet-sdk-10.0
 
   # node.js
   dnf5 install -y nodejs nodejs-npm
@@ -254,9 +262,6 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
 
   # imagemagick
   dnf5 install -y ImageMagick-devel
-
-  # needed for JFXPanel swing interop, not sure which one as it wasn't clear, so just installing both
-  dnf5 install -y gtk2-devel gtk3-devel
 fi
 
 # move stuff in /var/opt to /usr/lib/opt and add symlink to tmpfiles conf
