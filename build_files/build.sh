@@ -166,7 +166,7 @@ dnf5 install -y audacious audacious-plugins audacious-plugins-freeworld libopenm
 # vlc
 dnf5 install -y vlc vlc-plugins-all vlc-plugin-kde vlc-plugin-notify vlc-plugin-pipewire
 if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 install -y https://mirrors.neterra.net/rpmfusion/free/fedora/development/rawhide/Everything/x86_64/os/Packages/v/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
+  dnf5 install -y https://mirrors.neterra.net/rpmfusion/free/fedora/development/rawhide/Everything/x86_64/os/Packages/v/vlc-plugins-freeworld-3.0.22-4.fc45.x86_64.rpm
 else
   dnf5 install -y vlc-plugins-freeworld
 fi
