@@ -149,7 +149,7 @@ dnf5 config-manager setopt google-chrome.enabled=1
 dnf5 install -y google-chrome-stable
 
 # firefox
-dnf5 install -y firefox
+dnf5 install -y firefox --allowerasing
 
 # mercurial
 dnf5 install -y mercurial tortoisehg python3-dulwich kdiff3
