@@ -281,7 +281,7 @@ fi
 # remove unwanted stuff
 rm -f /usr/share/applications/discourse.desktop
 
-if [ "$MATRIX_TYPE" == "gamescope" ]; then
+if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-43" ]; then
   # remove HHD as I don't want or need it
   dnf5 -y remove hhd hhd-ui
 fi
