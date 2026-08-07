@@ -80,7 +80,8 @@ EOL
 #--
 fi
 
-# MOTD
+# MOTD, use different logic on testing vs stable
+if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-testing" ]; then
 rm -f /usr/share/ublue-os/motd/env.sh
 cat >/usr/share/ublue-os/motd/env.sh <<EOL
 #!/usr/bin/env sh
@@ -92,6 +93,17 @@ EOL
 chmod +x /usr/share/ublue-os/motd/env.sh
 rm -f /usr/share/ublue-os/motd/template.md
 cp /ctx/misc/motd-template.md /usr/share/ublue-os/motd/template.md
+rm -f /usr/share/ublue-os/motd/tips/*.md
+rm -rf /usr/share/ublue-os/motd/tips/
+else
+rm -f /usr/share/ublue-os/motd/bazzite.md
+cat >/usr/share/ublue-os/motd/bazzite.md <<EOL
+# Theledora ${MATRIX_FEDORA_VERSION}
+`Variant:` ${MATRIX_VARIANT}-${MATRIX_TAG}
+`Build:`   ${BUILD_DATE}.${BUILD_RUN_NUMBER}
+` `
+EOL
+fi
 
 # fastfetch stuff
 rm -f /usr/share/ublue-os/bazzite/logo.txt
@@ -316,8 +328,6 @@ rm -f /usr/bin/brh
 rm -f /usr/bin/bruh
 rm -f /usr/share/applications/bazzite-documentation.desktop
 rm -f /usr/share/applications/discourse.desktop
-rm -f /usr/share/ublue-os/motd/tips/*.md
-rm -rf /usr/share/ublue-os/motd/tips/
 dnf5 -y remove bazzite-portal
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
   dnf5 -y remove krunner-yafti
