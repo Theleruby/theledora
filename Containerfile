@@ -7,6 +7,7 @@ ARG MATRIX_FEDORA_VERSION=43
 ARG MATRIX_RELEASE_TYPE=stable
 ARG GITHUB_BRANCH=main
 ARG BUILD_DATE=20000101
+ARG BUILD_RUN_NUMBER=0
 
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
@@ -25,6 +26,7 @@ ARG MATRIX_FEDORA_VERSION
 ARG MATRIX_RELEASE_TYPE
 ARG GITHUB_BRANCH
 ARG BUILD_DATE
+ARG BUILD_RUN_NUMBER
 
 # Build script
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \

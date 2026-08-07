@@ -21,7 +21,7 @@ cp /ctx/branding/watermark.png /usr/share/plymouth/themes/spinner/watermark.png
 #              .\"image-branch\" |= \"${GITHUB_BRANCH}\" |
 #              .\"base-image-name\" |= \"${MATRIX_FEDORA_EDITION}\" |
 #              .\"fedora-version\" |= \"${MATRIX_FEDORA_VERSION}\" |
-#              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}\"" \
+#              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}\"" \
 #    )" \
 #>/usr/share/ublue-os/image-info.json
 
@@ -31,7 +31,7 @@ SUPPORT_END=$(grep -oP '^SUPPORT_END=\K.+' /etc/os-release)
 rm -f /usr/lib/os-release
 cat >/usr/lib/os-release << EOL
 NAME="Theledora"
-VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
+VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
 RELEASE_TYPE="${MATRIX_RELEASE_TYPE}"
 ID="theledora"
 ID_LIKE="bazzite fedora"
@@ -46,10 +46,10 @@ BUG_REPORT_URL="https://github.com/Theleruby/theledora/issues"
 SUPPORT_END=${SUPPORT_END}
 VARIANT="${MATRIX_VARIANT}"
 VARIANT_ID="${MATRIX_VARIANT}"
-OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}"
+OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
 BOOTLOADER_NAME="Theledora"
-BUILD_ID="${MATRIX_TAG}.${BUILD_DATE}"
-IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}"
+BUILD_ID="${MATRIX_TAG}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
+IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
 UPSTREAM_IMAGE_ID=${UPSTREAM_IMAGE_ID}
 VENDOR_NAME="theleruby"
 VENDOR_URL="https://www.theleruby.com"
@@ -71,7 +71,7 @@ cat >/etc/xdg/kcm-about-distrorc << EOL
 Name=Theledora
 LogoPath=/usr/share/ublue-os/theledora/theledora-box.png
 Website=https://github.com/Theleruby/theledora
-Version=${MATRIX_FEDORA_VERSION}.${BUILD_DATE}
+Version=${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}
 Variant=${MATRIX_VARIANT}-${MATRIX_TAG}
 ExtraSoftwareData=/usr/bin/upstream-image-id
 EOL

@@ -138,10 +138,13 @@ jobs:
           tags: |
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}.${{ github.run_number }}
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag2 }},enable=${{ matrix.tag2 != 'none' }}
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag2 }}.${{ steps.date.outputs.date_short }},enable=${{ matrix.tag2 != 'none' }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag2 }}.${{ steps.date.outputs.date_short }}.${{ github.run_number }},enable=${{ matrix.tag2 != 'none' }}
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag3 }},enable=${{ matrix.tag3 != 'none' }}
             type=raw,value=${{ matrix.variant }}-${{ matrix.tag3 }}.${{ steps.date.outputs.date_short }},enable=${{ matrix.tag3 != 'none' }}
+            type=raw,value=${{ matrix.variant }}-${{ matrix.tag3 }}.${{ steps.date.outputs.date_short }}.${{ github.run_number }},enable=${{ matrix.tag3 != 'none' }}
             type=sha,enable=${{ github.event_name == 'pull_request' }}
             type=ref,event=pr
           labels: |
@@ -153,7 +156,7 @@ jobs:
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/tree/${{ github.sha }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
-            org.opencontainers.image.version=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}
+            org.opencontainers.image.version=${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}.${{ github.run_number }}
             io.artifacthub.package.deprecated=false
             io.artifacthub.package.keywords=${{ env.IMAGE_KEYWORDS }}
             io.artifacthub.package.license=Apache-2.0
@@ -179,6 +182,7 @@ jobs:
             MATRIX_RELEASE_TYPE=${{ matrix.release_type }}
             GITHUB_BRANCH=${{ steps.extract_branch.outputs.branch }}
             BUILD_DATE=${{ steps.date.outputs.date_short }}
+            BUILD_RUN_NUMBER=${{ github.run_number }}
           # Postfix image name with -custom to make it a little more descriptive
           # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
           image: ${{ env.IMAGE_NAME }}
