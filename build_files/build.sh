@@ -6,24 +6,26 @@ set -euxo pipefail
 # apply branding
 #======================================
 
-# copy logo files
+# main branding files
 mkdir -p /usr/share/ublue-os/theledora/
-cp /ctx/branding/t* /usr/share/ublue-os/theledora/
-rm -f /usr/share/plymouth/themes/spinner/watermark.png
-cp /ctx/branding/watermark.png /usr/share/plymouth/themes/spinner/watermark.png
+cp /ctx/theledora/* /usr/share/ublue-os/theledora/
 
-# the image-info.json is used by various scripts to do stuff and editing it borks things. for now, don't.
+# plymouth watermark
+rm -f /usr/share/plymouth/themes/spinner/watermark.png
+cp /ctx/misc/watermark.png /usr/share/plymouth/themes/spinner/watermark.png
+
+# the image-info.json is used by various scripts to do stuff and editing it borks things. for now we use our own file
 #rm -f /usr/share/ublue-os/image-info.json
-#cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
-#              .\"image-vendor\" |= \"theleruby\" |
-#              .\"image-ref\" |= \"ostree-image-signed:docker://ghcr.io/theleruby/theledora\" |
-#              .\"image-tag\" |= \"${MATRIX_VARIANT}-${MATRIX_TAG}\" |
-#              .\"image-branch\" |= \"${GITHUB_BRANCH}\" |
-#              .\"base-image-name\" |= \"${MATRIX_FEDORA_EDITION}\" |
-#              .\"fedora-version\" |= \"${MATRIX_FEDORA_VERSION}\" |
-#              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}\"" \
-#    )" \
-#>/usr/share/ublue-os/image-info.json
+cat <<<"$(jq -n ".\"image-name\" |= \"theledora\" |
+              .\"image-vendor\" |= \"theleruby\" |
+              .\"image-ref\" |= \"ostree-image-signed:docker://ghcr.io/theleruby/theledora\" |
+              .\"image-tag\" |= \"${MATRIX_VARIANT}-${MATRIX_TAG}\" |
+              .\"image-branch\" |= \"${GITHUB_BRANCH}\" |
+              .\"base-image-name\" |= \"${MATRIX_FEDORA_EDITION}\" |
+              .\"fedora-version\" |= \"${MATRIX_FEDORA_VERSION}\" |
+              .\"version\" |= \"${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}\"" \
+    )" \
+>/usr/share/ublue-os/theledora/image-info.json
 
 # store upstream information so we can preserve it
 UPSTREAM_IMAGE_ID=$(grep -oP '^IMAGE_ID=\K.+' /etc/os-release)
@@ -78,10 +80,36 @@ EOL
 #--
 fi
 
+# MOTD
+rm -f /usr/share/ublue-os/motd/env.sh
+cat >/usr/share/ublue-os/motd/env.sh <<EOL
+#!/usr/bin/env sh
+export MOTD_IMAGE_VARIANT="${MATRIX_VARIANT}"
+export MOTD_IMAGE_TAG="${MATRIX_TAG}"
+export MOTD_IMAGE_VERSION="${MATRIX_FEDORA_VERSION}"
+export MOTD_IMAGE_BUILD="${BUILD_DATE}.${BUILD_RUN_NUMBER}"
+EOL
+chmod +x /usr/share/ublue-os/motd/env.sh
+rm -f /usr/share/ublue-os/motd/template.md
+cp /ctx/misc/motd-template.md /usr/share/ublue-os/motd/template.md
+
+# fastfetch stuff
+rm -f /usr/share/ublue-os/bazzite/logo.txt
+rm -f /usr/share/ublue-os/bazzite/fastfetch.jsonc
+rm -f /etc/profile.d/bazzite-neofetch.sh
+cp /ctx/misc/theledora-neofetch.sh /etc/profile.d/theledora-neofetch.sh
+chmod +x /etc/profile.d/theledora-neofetch.sh
+
+#if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
+#  sed -i "s|^github = .*|github = https://raw.githubusercontent.com/theleruby/theledora-gamemode-news/refs/heads/${MATRIX_RELEASE_TYPE}/announcements.json|" /etc/gamemode-news-hook.conf
+#EOL
+
 rm -f /usr/lib/fedora-release
 cat >/usr/lib/fedora-release << EOL
 Theledora release ${MATRIX_FEDORA_VERSION}
 EOL
+
+sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
 #======================================
 
 # print file contents for debugging
@@ -89,7 +117,11 @@ cat /usr/share/ublue-os/image-info.json
 cat /usr/lib/os-release
 cat /usr/bin/upstream-image-id
 cat /etc/xdg/kcm-about-distrorc
+cat /etc/gamemode-news-hook.conf
+cat /usr/share/ublue-os/motd/env.sh
+cat /usr/share/ublue-os/motd/template.md
 cat /usr/lib/fedora-release
+cat /usr/share/applications/system-update.desktop
 
 #======================================
 
@@ -265,6 +297,24 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
   dnf5 install -y ImageMagick-devel
 fi
 
+# remove unwanted bazzite stuff
+if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-43" ]; then
+  dnf5 -y remove hhd hhd-ui
+fi
+rm -f /usr/bin/bazzite-rollback-helper
+rm -f /usr/bin/brh
+rm -f /usr/bin/bruh
+rm -f /usr/share/applications/bazzite-documentation.desktop
+rm -f /usr/share/applications/discourse.desktop
+rm -f /usr/share/ublue-os/motd/tips/*.md
+rm -rf /usr/share/ublue-os/motd/tips/
+dnf5 -y remove bazzite-portal
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+  dnf5 -y remove krunner-yafti
+else
+  dnf5 -y remove gnome-search-yafti
+fi
+
 # move stuff in /var/opt to /usr/lib/opt and add symlink to tmpfiles conf
 # taken from https://github.com/astrovm/amyos/blob/main/build_files/fix-opt.sh, thanks <3
 for dir in /var/opt/*/; do
@@ -277,14 +327,6 @@ done
 if [ "$MATRIX_TYPE" == "desktop" ]; then
   # enable docker
   systemctl enable docker.service containerd.service
-fi
-
-# remove unwanted stuff
-rm -f /usr/share/applications/discourse.desktop
-
-if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-43" ]; then
-  # remove HHD as I don't want or need it
-  dnf5 -y remove hhd hhd-ui
 fi
 
 dnf5 clean all
