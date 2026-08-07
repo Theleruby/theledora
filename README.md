@@ -1,4 +1,4 @@
-![Logo](https://raw.githubusercontent.com/Theleruby/theledora/refs/heads/main/build_files/branding/theledora.svg)
+![Logo](https://raw.githubusercontent.com/Theleruby/theledora/refs/heads/main/build_files/theledora/theledora.svg)
 
 ## What is Theledora?
 
