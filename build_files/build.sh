@@ -116,12 +116,6 @@ fi
 if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
   cat /etc/gamemode-news-hook.conf
 fi
-if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-testing" ]; then
-  cat /usr/share/ublue-os/motd/env.sh
-  cat /usr/share/ublue-os/motd/template.md
-else
-  cat /usr/share/ublue-os/motd/bazzite.md
-fi
 cat /usr/lib/fedora-release
 if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
   cat /usr/share/applications/system-update.desktop
