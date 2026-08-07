@@ -80,35 +80,14 @@ EOL
 #--
 fi
 
-# MOTD, use different logic on testing vs stable
-if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-testing" ]; then
-rm -f /usr/share/ublue-os/motd/env.sh
-cat >/usr/share/ublue-os/motd/env.sh <<EOL
-#!/usr/bin/env sh
-export MOTD_IMAGE_VARIANT="${MATRIX_VARIANT}"
-export MOTD_IMAGE_TAG="${MATRIX_TAG}"
-export MOTD_IMAGE_VERSION="${MATRIX_FEDORA_VERSION}"
-export MOTD_IMAGE_BUILD="${BUILD_DATE}.${BUILD_RUN_NUMBER}"
-EOL
-chmod +x /usr/share/ublue-os/motd/env.sh
-rm -f /usr/share/ublue-os/motd/template.md
-cp /ctx/misc/motd-template.md /usr/share/ublue-os/motd/template.md
-rm -f /usr/share/ublue-os/motd/tips/*.md
-rm -rf /usr/share/ublue-os/motd/tips/
-else
-rm -f /usr/share/ublue-os/motd/bazzite.md
-cat >/usr/share/ublue-os/motd/bazzite.md <<EOL
-# Theledora ${MATRIX_FEDORA_VERSION}
-`Variant:` ${MATRIX_VARIANT}-${MATRIX_TAG}
-`Build:`   ${BUILD_DATE}.${BUILD_RUN_NUMBER}
-` `
-EOL
-fi
-
-# fastfetch stuff
+# fastfetch/motd stuff
 rm -f /etc/profile.d/bazzite-neofetch.sh
 cp /ctx/misc/theledora-neofetch.sh /etc/profile.d/theledora-neofetch.sh
 chmod +x /etc/profile.d/theledora-neofetch.sh
+rm -rf /usr/share/ublue-os/motd
+rm -rf /usr/libexec/ublue-motd
+cp /ctx/misc/ublue-motd /usr/libexec/ublue-motd
+chmod +x /usr/libexec/ublue-motd
 
 #if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
 #  sed -i "s|^github = .*|github = https://raw.githubusercontent.com/theleruby/theledora-gamemode-news/refs/heads/${MATRIX_RELEASE_TYPE}/announcements.json|" /etc/gamemode-news-hook.conf

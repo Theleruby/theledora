@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+if [[ -n "$MC_SID" ]]; then
+  exit 0
+fi
+
+PARENT_PROCESS=$(ps -p $PPID -o comm=)
+if [[ "$PARENT_PROCESS" != "dolphin" ]]; then
+  echo "" && /usr/bin/fastfetch --color "0;38;2;240;80;180" -c /usr/share/ublue-os/theledora/fastfetch.jsonc && echo ""
+fi

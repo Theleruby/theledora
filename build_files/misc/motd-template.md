@@ -1,4 +1,0 @@
-# Theledora ${MOTD_IMAGE_VERSION}
-`Variant:` ${MOTD_IMAGE_VARIANT}-${MOTD_IMAGE_TAG}
-`Build:`   ${MOTD_IMAGE_BUILD}
-` `
