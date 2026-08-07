@@ -124,6 +124,7 @@ EOL
 # this was changed in testing branch so needs reworking
 if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
   sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
+  sed -i 's/bazzite/theledora/g' /usr/share/applications/system-update.desktop
 fi
 #======================================
 
