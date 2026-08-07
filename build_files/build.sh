@@ -109,7 +109,8 @@ cat >/usr/lib/fedora-release << EOL
 Theledora release ${MATRIX_FEDORA_VERSION}
 EOL
 
-if [ "$MATRIX_TYPE" == "desktop" ]; then
+# this was changed in testing branch so needs reworking
+if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
   sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
 fi
 #======================================
@@ -128,7 +129,7 @@ fi
 cat /usr/share/ublue-os/motd/env.sh
 cat /usr/share/ublue-os/motd/template.md
 cat /usr/lib/fedora-release
-if [ "$MATRIX_TYPE" == "desktop" ]; then
+if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
   cat /usr/share/applications/system-update.desktop
 fi
 
