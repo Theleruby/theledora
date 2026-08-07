@@ -109,19 +109,28 @@ cat >/usr/lib/fedora-release << EOL
 Theledora release ${MATRIX_FEDORA_VERSION}
 EOL
 
-sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
+if [ "$MATRIX_TYPE" == "desktop" ]; then
+  sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
+fi
 #======================================
 
 # print file contents for debugging
 cat /usr/share/ublue-os/image-info.json
+cat /usr/share/ublue-os/theledora/image-info.json
 cat /usr/lib/os-release
-cat /usr/bin/upstream-image-id
-cat /etc/xdg/kcm-about-distrorc
-cat /etc/gamemode-news-hook.conf
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+  cat /usr/bin/upstream-image-id
+  cat /etc/xdg/kcm-about-distrorc
+fi
+if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
+  cat /etc/gamemode-news-hook.conf
+fi
 cat /usr/share/ublue-os/motd/env.sh
 cat /usr/share/ublue-os/motd/template.md
 cat /usr/lib/fedora-release
-cat /usr/share/applications/system-update.desktop
+if [ "$MATRIX_TYPE" == "desktop" ]; then
+  cat /usr/share/applications/system-update.desktop
+fi
 
 #======================================
 
