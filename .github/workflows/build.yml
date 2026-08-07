@@ -66,6 +66,7 @@ jobs:
           parent_image: bazzite-nvidia-open
           tag: stable-44
           tag2: stable
+          tag3: none
           fedora_version: 44
           fedora_edition: kinoite
           release_type: stable
@@ -74,6 +75,7 @@ jobs:
           parent_image: bazzite-nvidia-open
           tag: testing-44
           tag2: testing
+          tag3: none
           fedora_version: 44
           fedora_edition: kinoite
           release_type: development
@@ -82,6 +84,7 @@ jobs:
           parent_image: bazzite-deck
           tag: stable-43
           tag2: stable
+          tag3: none
           fedora_version: 43
           fedora_edition: kinoite
           release_type: stable
@@ -90,6 +93,7 @@ jobs:
           parent_image: bazzite-deck
           tag: testing-44
           tag2: testing
+          tag3: none
           fedora_version: 44
           fedora_edition: kinoite
           release_type: development
