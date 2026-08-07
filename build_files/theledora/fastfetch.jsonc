@@ -4,7 +4,7 @@
         "type": "file",
         "source": "/usr/share/ublue-os/theledora/logo.txt",
         "color": {
-            "1": "red",
+            "1": "0;38;2;240;80;180",
             "2": "47",
             "3": "95",
             "4": "0",
