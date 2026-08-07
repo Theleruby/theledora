@@ -106,8 +106,6 @@ EOL
 fi
 
 # fastfetch stuff
-rm -f /usr/share/ublue-os/bazzite/logo.txt
-rm -f /usr/share/ublue-os/bazzite/fastfetch.jsonc
 rm -f /etc/profile.d/bazzite-neofetch.sh
 cp /ctx/misc/theledora-neofetch.sh /etc/profile.d/theledora-neofetch.sh
 chmod +x /etc/profile.d/theledora-neofetch.sh
