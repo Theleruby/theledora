@@ -43,7 +43,7 @@ No testing branch is currently available for this image.
 
 #### desktop-nvidia-open
 
-This variant is based on [bazzite-nvidia-open](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia-open). In addition to the GPUs supported by the regular desktop image, it also comes with the NVIDIA Open GPU kernel module, which currently supports NVIDIA GeForce 1600 series or later GPUs. I tested it with my 4070 Ti SUPER and the drivers are mostly stable, with only some very minor issues. The performance in most games seems to be roughly comparable with Windows 11.
+This variant is based on [bazzite-nvidia-open](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia-open). In addition to the GPUs supported by the regular desktop image, it also comes with the NVIDIA Open GPU kernel module, which currently supports cards with Turing architecture (NVIDIA GeForce 1600 and RTX 2000 series) or newer. I tested it with my 4070 Ti SUPER and the drivers are mostly stable, with only some very minor issues. The performance in most games seems to be roughly comparable with Windows 11.
 
 To install the upstream version:
 https://download.bazzite.gg/bazzite-nvidia-open-stable-live-amd64.iso
@@ -55,7 +55,9 @@ If you prefer to use the Bazzite testing branch instead, there is also a `deskto
 
 #### desktop-nvidia-legacy
 
-This variant is based on [bazzite-nvidia](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia). In addition to the GPUs supported by the regular desktop image, it also comes with release 580 of the legacy proprietary NVIDIA GPU kernel module, which provides support for GTX 900 and 1000 series GPUs. Note that currently NVIDIA GPUs older than this are not supported.
+This variant is based on [bazzite-nvidia](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia). In addition to the GPUs supported by the regular desktop image, it also comes with release 580 of the legacy proprietary NVIDIA GPU kernel module, which provides support for cards with Pascal, Maxwell, and Volta architecture (GTX 900 and 1000 series GPUs).
+
+Note that NVIDIA GPUs older than 900 series are currently not supported, primarily because kernel modules older than 495 are incompatible with KWin (KDE's Wayland compositor) and the latest proprietary kernel module available for the previous generation (600 and 700 series, with Kepler architecture) is release 470 which is too old. If you have one of those old NVIDIA cards you are advised to upgrade to something newer.
 
 To install the upstream version:
 https://download.bazzite.gg/bazzite-nvidia-stable-live-amd64.iso
