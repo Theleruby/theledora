@@ -1,9 +1,9 @@
 ---
 name: Build container images
 run-name: ${{ github.event_name == 'pull_request' && format('[#{0}] {1}', github.event.pull_request.number, github.event.pull_request.title)
-           || github.event_name == 'schedule' && 'Daily build of container images'
+           || github.event_name == 'schedule' && 'Daily build'
            || github.event_name == 'push' && github.event.head_commit.message
-           || github.event_name == 'workflow_dispatch' && 'Manual build of container images'
+           || github.event_name == 'workflow_dispatch' && 'Manual build'
            || '' }}
 on:
   pull_request:
@@ -26,7 +26,7 @@ env:
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name}}-${{ inputs.stream_name }}
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name }}-${{ inputs.stream_name }}
   cancel-in-progress: true
 
 jobs:
@@ -259,3 +259,49 @@ jobs:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
+
+      - name: Publish changelog to TUPS
+        if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+        run: |
+          set -euo pipefail
+          ctr=$(buildah from "$IMAGE_NAME")
+          trap 'buildah rm "$ctr" >/dev/null 2>&1 || true' EXIT
+          buildah run "$ctr" -- bash -c 'dnf5 repoquery --installed --queryformat "%{name}/%{version}/%{release}/%{arch}\n"' > packages.txt
+          jq -n \
+          --arg id "${{ env.IMAGE_NAME }}-${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}.${{ github.run_number }}" \
+          --arg image "${{ env.IMAGE_NAME }}" \
+          --arg branch "${{ steps.extract_branch.outputs.branch }}" \
+          --arg event_name "${{ github.event_name }}" \
+          --arg run_name "${{ github.run_name }}" \
+          --arg run_number "${{ github.run_number }}" \
+          --arg sha "${{ github.sha }}" \
+          --arg date "${{ steps.date.outputs.date }}" \
+          --arg type "${{ matrix.type }}" \
+          --arg variant "${{ matrix.variant }}" \
+          --arg tag "${{ matrix.tag }}" \
+          --arg tag2 "${{ matrix.tag2 }}" \
+          --arg tag3 "${{ matrix.tag3 }}" \
+          --arg fedora_version "${{ matrix.fedora_version }}" \
+          --arg fedora_edition "${{ matrix.fedora_edition }}" \
+          --arg release_type "${{ matrix.release_type }}" \
+          --arg date_short "${{ steps.date.outputs.date_short }}" \
+          '{
+              id: $id,
+              image: $image,
+              branch: $branch,
+              event_name: $event_name,
+              run_name: $run_name,
+              run_number: ($run_number | tonumber),
+              sha: $sha,
+              date: $date,
+              type: $type,
+              variant: $variant,
+              tag: $tag,
+              tag2: $tag2,
+              tag3: $tag3,
+              fedora_version: ($fedora_version | tonumber),
+              fedora_edition: $fedora_edition,
+              release_type: $release_type,
+              date_short: $date_short
+          }' > metadata.json
+          curl --fail-with-body --header "Authorization: Bearer ${{ secrets.TUPS_API_TOKEN }}" --request POST --form 'data=<metadata.json;type=application/json' --form 'file=@packages.txt;type=text/plain' https://tups.theleruby.com/api/publish
