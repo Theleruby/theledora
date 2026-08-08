@@ -24,6 +24,11 @@ env:
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # Put your own image here for a fancy profile on https://artifacthub.io/!
   IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
+  GITHUB_RUN_NAME: ${{ github.event_name == 'pull_request' && format('[#{0}] {1}', github.event.pull_request.number, github.event.pull_request.title)
+                    || github.event_name == 'schedule' && 'Daily build'
+                    || github.event_name == 'push' && github.event.head_commit.message
+                    || github.event_name == 'workflow_dispatch' && 'Manual build'
+                    || '' }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}-${{ inputs.brand_name }}-${{ inputs.stream_name }}
@@ -267,12 +272,13 @@ jobs:
           ctr=$(buildah from "$IMAGE_NAME:${{ matrix.variant }}-${{ matrix.tag }}")
           trap 'buildah rm "$ctr" >/dev/null 2>&1 || true' EXIT
           buildah run "$ctr" -- bash -c 'dnf5 repoquery --installed --queryformat "%{name}/%{version}/%{release}/%{arch}\n"' > packages.txt
+          upstream_image_id=$(buildah run "$ctr" -- bash -c 'source /etc/os-release && printf "%s" "$UPSTREAM_IMAGE_ID"')
           jq -n \
           --arg id "${{ env.IMAGE_NAME }}-${{ matrix.variant }}-${{ matrix.tag }}.${{ steps.date.outputs.date_short }}.${{ github.run_number }}" \
           --arg image "${{ env.IMAGE_NAME }}" \
           --arg branch "${{ steps.extract_branch.outputs.branch }}" \
           --arg event_name "${{ github.event_name }}" \
-          --arg run_name "${{ github.run_name }}" \
+          --arg run_name "$GITHUB_RUN_NAME" \
           --arg run_number "${{ github.run_number }}" \
           --arg sha "${{ github.sha }}" \
           --arg date "${{ steps.date.outputs.date }}" \
@@ -285,6 +291,7 @@ jobs:
           --arg fedora_edition "${{ matrix.fedora_edition }}" \
           --arg release_type "${{ matrix.release_type }}" \
           --arg date_short "${{ steps.date.outputs.date_short }}" \
+          --arg upstream_image_id "$upstream_image_id" \
           '{
               id: $id,
               image: $image,
@@ -302,6 +309,7 @@ jobs:
               fedora_version: ($fedora_version | tonumber),
               fedora_edition: $fedora_edition,
               release_type: $release_type,
-              date_short: $date_short
+              date_short: $date_short,
+              upstream_image_id: $upstream_image_id
           }' > metadata.json
           curl --fail-with-body --header "Authorization: Bearer ${{ secrets.TUPS_API_TOKEN }}" --request POST --form 'data=<metadata.json;type=application/json' --form 'file=@packages.txt;type=text/plain' https://tups.theleruby.com/api/publish
