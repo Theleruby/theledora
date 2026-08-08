@@ -144,16 +144,21 @@ dnf5 install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 dnf5 install -y htop execstack libzip-tools
 
 # dependencies for some stuff
-dnf5 install -y kdsingleapplication-qt6 gtk2 gtk3
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+  dnf5 install -y kdsingleapplication-qt6
+fi
+dnf5 install -y gtk2 gtk3
 
 # fedora stuff
 dnf5 install -y mediawriter
 
 # kde applications
-dnf5 install -y filelight gwenview kcalc okular
-dnf5 install -y kolourpaint krita kdenlive kamoso skanpage haruna kcolorchooser kcharselect k3b
-dnf5 install -y kpat kmahjongg kiriki kreversi kblocks kmines
-rm -f /usr/share/applications/gcdmaster.desktop
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+  dnf5 install -y filelight gwenview kcalc okular
+  dnf5 install -y kolourpaint krita kdenlive kamoso skanpage haruna kcolorchooser kcharselect k3b okteta
+  dnf5 install -y kpat kmahjongg kiriki kreversi kblocks kmines
+  rm -f /usr/share/applications/gcdmaster.desktop
+fi
 
 # easyeffects
 dnf5 install -y easyeffects calf lv2 lv2-calf-plugins lv2-mdala-plugins lv2-zam-plugins lsp-plugins-lv2
@@ -209,7 +214,10 @@ dnf5 install -y yt-dlp
 dnf5 install -y zerotier-one
 
 # libreoffice
-dnf5 install -y libreoffice libreoffice-kf6 libreoffice-help-en
+dnf5 install -y libreoffice libreoffice-help-en
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+  dnf5 install -y libreoffice-kf6
+fi
 
 # discord
 dnf5 install -y https://discord.com/api/download?platform=linux\&format=rpm
@@ -247,6 +255,7 @@ dnf5 install -y krusader
 dnf5 install -y kdiskmark
 dnf5 copr -y enable birkch/QDiskInfo
 dnf5 install -y QDiskInfo
+dnf5 copr -y disable birkch/QDiskInfo
 
 # fonts
 dnf5 install -y cabextract fontconfig
