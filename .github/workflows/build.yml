@@ -57,6 +57,36 @@ jobs:
         #fedora_edition: [silverblue, kinoite]
         #release_type: [stable, lts, development, experiment]
         include:
+
+        #===================================
+        # desktop 44 stable
+        #===================================
+        - type: desktop
+          variant: desktop
+          parent_image: bazzite
+          tag: stable-44
+          tag2: stable
+          tag3: none
+          fedora_version: 44
+          fedora_edition: kinoite
+          release_type: stable
+
+        #===================================
+        # desktop 44 testing. currently unused
+        #===================================
+        #- type: desktop
+        #  variant: desktop
+        #  parent_image: bazzite
+        #  tag: testing-44
+        #  tag2: testing
+        #  tag3: none
+        #  fedora_version: 44
+        #  fedora_edition: kinoite
+        #  release_type: development
+
+        #===================================
+        # desktop nvidia open 43 stable. now obsolete
+        #===================================
         #- type: desktop
         #  variant: desktop-nvidia-open
         #  parent_image: bazzite-nvidia-open
@@ -66,6 +96,10 @@ jobs:
         #  fedora_version: 43
         #  fedora_edition: kinoite
         #  release_type: stable
+
+        #===================================
+        # desktop nvidia open 44 stable
+        #===================================
         - type: desktop
           variant: desktop-nvidia-open
           parent_image: bazzite-nvidia-open
@@ -75,6 +109,10 @@ jobs:
           fedora_version: 44
           fedora_edition: kinoite
           release_type: stable
+
+        #===================================
+        # desktop nvidia open 44 testing
+        #===================================
         - type: desktop
           variant: desktop-nvidia-open
           parent_image: bazzite-nvidia-open
@@ -84,6 +122,36 @@ jobs:
           fedora_version: 44
           fedora_edition: kinoite
           release_type: development
+
+        #===================================
+        # desktop nvidia legacy 44 stable
+        #===================================
+        - type: desktop
+          variant: desktop-nvidia-legacy
+          parent_image: bazzite-nvidia
+          tag: stable-44
+          tag2: stable
+          tag3: none
+          fedora_version: 44
+          fedora_edition: kinoite
+          release_type: stable
+
+        #===================================
+        # desktop nvidia legacy 44 testing. currently unused
+        #===================================
+        #- type: desktop
+        #  variant: desktop-nvidia-legacy
+        #  parent_image: bazzite-nvidia
+        #  tag: testing-44
+        #  tag2: testing
+        #  tag3: none
+        #  fedora_version: 44
+        #  fedora_edition: kinoite
+        #  release_type: development
+
+        #===================================
+        # gamescope 43 stable
+        #===================================
         - type: gamescope
           variant: gamescope
           parent_image: bazzite-deck
@@ -93,6 +161,10 @@ jobs:
           fedora_version: 43
           fedora_edition: kinoite
           release_type: stable
+
+        #===================================
+        # gamescope 44 testing
+        #===================================
         - type: gamescope
           variant: gamescope
           parent_image: bazzite-deck

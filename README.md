@@ -14,26 +14,56 @@ I also don't consider Theledora to be its own operating system or distro - apart
 
 ## Available images
 
-| Variant | Purpose | Compatible GPU | Desktop environment | Gamescope session |
-|--|--|--|--|--|
-| desktop-nvidia-open | Desktop PC | NVIDIA GPU<br/>(1600 series or later) | KDE Plasma | No |
-| gamescope | Handheld or HTPC | AMD GPU<br/>(RX 400 series or later) | KDE Plasma | Yes |
+| Variant | Purpose | Compatible GPU | Desktop environment | Gamescope session | Testing branch |
+|--|--|--|--|--|--|
+| desktop | Desktop PC | AMD or Intel GPU | KDE Plasma | No | No |
+| desktop-nvidia-open | Desktop PC | NVIDIA GPU<br/>(1600 series or later) | KDE Plasma | No | Yes |
+| desktop-nvidia-legacy | Desktop PC | NVIDIA GPU<br/>(GTX 900 or 1000 series) | KDE Plasma | No | No |
+| gamescope | Handheld or HTPC | AMD GPU<br/>(RX 400 series or later) | KDE Plasma | Yes | Yes |
 
 ISO installers are not currently available. To install a variant, you will therefore first need to install the upstream version of Bazzite using the provided link. After installing, enter the provided switch command and then reboot. This will switch you over to Theledora.
+
+All currently built images use KDE Plasma (based on Fedora Kinoite). GNOME versions (based on Fedora Silverblue) are not currently being built, as I don't use GNOME.
 
 ### Desktop variants
 
 These variants boot directly into a KDE Plasma desktop session. The gamescope session (Steam Gaming Mode) is not included.
 
+#### desktop
+
+This variant is based on [bazzite](https://github.com/ublue-os/bazzite/pkgs/container/bazzite). This is the base version without any NVIDIA kernel module. You can use this if you don't have an NVIDIA GPU. The vast majority of AMD and Intel GPUs are supported with this image.
+
+To install the upstream version:
+https://download.bazzite.gg/bazzite-stable-live-amd64.iso
+
+To switch to this variant afterwards:
+`sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:desktop-stable`
+
+No testing branch is currently available for this image.
+
 #### desktop-nvidia-open
 
-This variant is based on [bazzite-nvidia-open](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia-open). It comes with the NVIDIA Open GPU kernel modules, and is intended for desktop computers which have NVIDIA GeForce 1600 series or later GPUs. I tested it with my 4070 Ti SUPER and the drivers are mostly stable, with only some very minor issues. The performance in most games seems to be roughly comparable with Windows 11.
+This variant is based on [bazzite-nvidia-open](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia-open). In addition to the GPUs supported by the regular desktop image, it also comes with the NVIDIA Open GPU kernel module, which currently supports NVIDIA GeForce 1600 series or later GPUs. I tested it with my 4070 Ti SUPER and the drivers are mostly stable, with only some very minor issues. The performance in most games seems to be roughly comparable with Windows 11.
 
 To install the upstream version:
 https://download.bazzite.gg/bazzite-nvidia-open-stable-live-amd64.iso
 
 To switch to this variant afterwards:
 `sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:desktop-nvidia-open-stable`
+
+If you prefer to use the Bazzite testing branch instead, there is also a `desktop-nvidia-open-testing` image available. Note that this doesn't really get used, so is likely to randomly end up broken.
+
+#### desktop-nvidia-legacy
+
+This variant is based on [bazzite-nvidia](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia). In addition to the GPUs supported by the regular desktop image, it also comes with release 580 of the legacy proprietary NVIDIA GPU kernel module, which provides support for GTX 900 and 1000 series GPUs. Note that currently NVIDIA GPUs older than this are not supported.
+
+To install the upstream version:
+https://download.bazzite.gg/bazzite-nvidia-stable-live-amd64.iso
+
+To switch to this variant afterwards:
+`sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:desktop-nvidia-legacy-stable`
+
+No testing branch is currently available for this image.
 
 ### Handheld/HTPC variants
 
@@ -45,13 +75,15 @@ Note that when you're using the gamescope session it will claim you're running S
 
 #### gamescope
 
-This variant is based on [bazzite-deck](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-deck). It supports AMD GPUs (RX 400 series or later) only. Intel and NVIDIA GPUs are not currently supported on this image.
+This variant is based on [bazzite-deck](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-deck). It supports AMD GPUs (RX 400 series or later) only, and has been tested with an AMD Radeon RX 9070 XT which seems to be stable. Intel and NVIDIA GPUs are not currently supported on this image.
 
 To install the upstream version:
 https://download.bazzite.gg/bazzite-deck-stable-live-amd64.iso
 
 To switch to this variant afterwards:
 `sudo bootc switch --enforce-container-sigpolicy ghcr.io/theleruby/theledora:gamescope-stable`
+
+If you prefer to use the Bazzite testing branch instead, there is also a `gamescope-testing` image available. Note that this doesn't really get used, so is likely to randomly end up broken.
 
 ## Automatic and manual updates
 
