@@ -214,9 +214,10 @@ dnf5 install -y yt-dlp
 dnf5 install -y zerotier-one
 
 # libreoffice
-dnf5 install -y libreoffice libreoffice-help-en
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
-  dnf5 install -y libreoffice-kf6
+  dnf5 install -y libreoffice libreoffice-kf6 libreoffice-help-en
+else
+  dnf5 install -y libreoffice libreoffice-gtk3 libreoffice-help-en
 fi
 
 # discord
