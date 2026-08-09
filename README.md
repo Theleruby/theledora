@@ -55,7 +55,7 @@ If you prefer to use the Bazzite testing branch instead, there is also a `deskto
 
 #### desktop-nvidia-legacy
 
-This variant is based on [bazzite-nvidia](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia). In addition to the GPUs supported by the regular desktop image, it also comes with release 580 of the legacy proprietary NVIDIA GPU kernel module, which provides support for cards with Pascal, Maxwell, and Volta architecture (GTX 900 and 1000 series GPUs).
+This variant is based on [bazzite-nvidia](https://github.com/ublue-os/bazzite/pkgs/container/bazzite-nvidia). In addition to the GPUs supported by the regular desktop image, it also comes with release 580 of the legacy proprietary NVIDIA GPU kernel module, which provides support for cards with Maxwell, Pascal, and Volta architectures (GTX 900 and 1000 series GPUs).
 
 Note that NVIDIA GPUs older than 900 series are currently not supported, primarily because kernel modules older than 495 are incompatible with KWin (KDE's Wayland compositor) and the latest proprietary kernel module available for the previous generation (600 and 700 series, with Kepler architecture) is release 470 which is too old. If you have one of those old NVIDIA cards you are advised to upgrade to something newer.
 
