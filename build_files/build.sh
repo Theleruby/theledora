@@ -91,7 +91,7 @@ chmod +x /usr/libexec/ublue-motd
 
 if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
   sed -i "s|^github = .*|github = https://tups.theleruby.com/api/announcements/theledora/${GITHUB_BRANCH}/updates.json|" /etc/gamemode-news-hook.conf
-EOL
+fi
 
 rm -f /usr/lib/fedora-release
 cat >/usr/lib/fedora-release << EOL
