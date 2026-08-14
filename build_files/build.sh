@@ -89,9 +89,9 @@ rm -rf /usr/libexec/ublue-motd
 cp /ctx/misc/ublue-motd /usr/libexec/ublue-motd
 chmod +x /usr/libexec/ublue-motd
 
-#if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
-#  sed -i "s|^github = .*|github = https://raw.githubusercontent.com/theleruby/theledora-gamemode-news/refs/heads/${MATRIX_RELEASE_TYPE}/announcements.json|" /etc/gamemode-news-hook.conf
-#EOL
+if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
+  sed -i "s|^github = .*|github = https://tups.theleruby.com/api/announcements/theledora/${GITHUB_BRANCH}/updates.json|" /etc/gamemode-news-hook.conf
+EOL
 
 rm -f /usr/lib/fedora-release
 cat >/usr/lib/fedora-release << EOL
