@@ -103,6 +103,10 @@ By default, only two deployments are kept (the latest one and the previous one).
 
 A list of all deployed images (including pending updates and pinned deployments) can be displayed using `rpm-ostree status`.
 
+## Change Logs
+
+Changelogs for Theledora are published to https://tups.theleruby.com/
+
 ## Documentation
 
 Bazzite Documentation: https://docs.bazzite.gg/
