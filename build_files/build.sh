@@ -141,7 +141,7 @@ dnf5 config-manager setopt fedora-cisco-openh264.enabled=1
 dnf5 install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
 
 # basic command line tools that should have just been in fedora by default
-dnf5 install -y htop execstack libzip-tools
+dnf5 install -y htop execstack libzip-tools putty
 
 # dependencies for some stuff
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
