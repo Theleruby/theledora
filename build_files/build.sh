@@ -99,6 +99,10 @@ fi
 if [ "$MATRIX_TYPE" == "gamescope" ]; then
   rm -f /usr/libexec/os-branch-select
   cp /ctx/misc/os-branch-select /usr/libexec/os-branch-select
+fi
+
+# fix update version being displayed (os parse error)
+if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
   rm -f /usr/libexec/ogc/os-update
   cp /ctx/misc/os-update /usr/libexec/ogc/os-update
 fi
