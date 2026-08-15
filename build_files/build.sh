@@ -89,8 +89,18 @@ rm -rf /usr/libexec/ublue-motd
 cp /ctx/misc/ublue-motd /usr/libexec/ublue-motd
 chmod +x /usr/libexec/ublue-motd
 
+# gamemode news hook announcements. currently borked
 if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
   sed -i "s|^github = .*|github = https://tups.theleruby.com/api/announcements/theledora/${GITHUB_BRANCH}/updates.json|" /etc/gamemode-news-hook.conf
+fi
+
+# stop the branch being changed in big picture mode by replacing os-branch-select with a dummy script
+# (required to prevent it showing junk branches and calling brh)
+if [ "$MATRIX_TYPE" == "gamescope" ]; then
+  rm -f /usr/libexec/os-branch-select
+  cp /ctx/misc/os-branch-select /usr/libexec/os-branch-select
+  rm -f /usr/libexec/ogc/os-update
+  cp /ctx/misc/os-update /usr/libexec/ogc/os-update
 fi
 
 rm -f /usr/lib/fedora-release
@@ -98,7 +108,7 @@ cat >/usr/lib/fedora-release << EOL
 Theledora release ${MATRIX_FEDORA_VERSION}
 EOL
 
-# this was changed in testing branch so needs reworking
+# this just calls topgrade on desktop. in testing branch it was replaced with a UI program that I'm removing, so this needs reworking
 if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
   sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
   sed -i 's/bazzite/theledora/g' /usr/share/applications/system-update.desktop
@@ -305,13 +315,18 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
   dnf5 install -y ImageMagick-devel
 fi
 
-# remove unwanted bazzite stuff
+# remove HHD as I don't need it. this was removed in bazzite 44 anyway.
 if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-43" ]; then
   dnf5 -y remove hhd hhd-ui
 fi
+
+# remove stuff that's specific to bazzite and not relevant to theledora. some of this I should probably replace with an equivalent at some point
 rm -f /usr/bin/bazzite-rollback-helper
 rm -f /usr/bin/brh
 rm -f /usr/bin/bruh
+if [ "$MATRIX_RELEASE_TYPE" == "testing" ]; then
+  dnf5 -y remove bazzite-updater
+fi
 rm -f /usr/share/applications/bazzite-documentation.desktop
 rm -f /usr/share/applications/discourse.desktop
 dnf5 -y remove bazzite-portal

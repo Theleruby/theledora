@@ -1,0 +1,23 @@
+#!/usr/bin/bash
+set -e
+source /etc/os-release
+
+branch=$(cut -d ":" -f4 <<< "$(rpm-ostree status --booted | grep -m 1 $ID)")
+# Trim and convert to lowercase
+branch=$(echo "$branch" | tr '[:upper:]' '[:lower:]' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+if [[ $# -eq 1 ]]; then
+  case "$1" in
+    -c)
+      echo "$branch"
+      exit 0
+      ;;
+    -l)
+      echo "$branch"
+      exit 0
+      ;;
+  esac
+fi
+
+echo "steamos-select-branch is not currently supported on Theledora, use bootc switch instead" 1>&2
+exit 1
