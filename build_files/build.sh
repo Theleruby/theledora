@@ -328,7 +328,7 @@ fi
 rm -f /usr/bin/bazzite-rollback-helper
 rm -f /usr/bin/brh
 rm -f /usr/bin/bruh
-if [ "$MATRIX_RELEASE_TYPE" == "testing" ]; then
+if [ "$MATRIX_RELEASE_TYPE" == "development" ]; then
   dnf5 -y remove bazzite-updater
 fi
 rm -f /usr/share/applications/bazzite-documentation.desktop
