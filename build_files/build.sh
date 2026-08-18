@@ -43,7 +43,7 @@ PRETTY_NAME="Theledora"
 ANSI_COLOR="0;38;2;240;30;160"
 CPE_NAME="cpe:/o:theleruby:theledora:${MATRIX_FEDORA_VERSION}"
 DEFAULT_HOSTNAME="theledora"
-HOME_URL="https://github.com/Theleruby/theledora"
+HOME_URL="https://www.theledora.org"
 BUG_REPORT_URL="https://github.com/Theleruby/theledora/issues"
 SUPPORT_END=${SUPPORT_END}
 VARIANT="${MATRIX_VARIANT}"
@@ -72,7 +72,7 @@ cat >/etc/xdg/kcm-about-distrorc << EOL
 [General]
 Name=Theledora
 LogoPath=/usr/share/ublue-os/theledora/theledora-box.png
-Website=https://github.com/Theleruby/theledora
+Website=https://www.theledora.org
 Version=${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}
 Variant=${MATRIX_VARIANT}-${MATRIX_TAG}
 ExtraSoftwareData=/usr/bin/upstream-image-id
@@ -91,7 +91,7 @@ chmod +x /usr/libexec/ublue-motd
 
 # gamemode news hook announcements. currently borked
 if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
-  sed -i "s|^github = .*|github = https://tups.theleruby.com/api/announcements/theledora/${GITHUB_BRANCH}/updates.json|" /etc/gamemode-news-hook.conf
+  sed -i "s|^github = .*|github = https://tups.theledora.org/api/announcements/theledora/${GITHUB_BRANCH}/updates.json|" /etc/gamemode-news-hook.conf
 fi
 
 # stop the branch being changed in big picture mode by replacing os-branch-select with a dummy script

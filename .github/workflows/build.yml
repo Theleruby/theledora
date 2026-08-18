@@ -384,4 +384,4 @@ jobs:
               date_short: $date_short,
               upstream_image_id: $upstream_image_id
           }' > metadata.json
-          curl --fail-with-body --header "Authorization: Bearer ${{ secrets.TUPS_API_TOKEN }}" --request POST --form 'data=<metadata.json;type=application/json' --form 'file=@packages.txt;type=text/plain' https://tups.theleruby.com/api/publish
+          curl --fail-with-body --header "Authorization: Bearer ${{ secrets.TUPS_API_TOKEN }}" --request POST --form 'data=<metadata.json;type=application/json' --form 'file=@packages.txt;type=text/plain' https://tups.theledora.org/api/publish

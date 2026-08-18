@@ -105,7 +105,7 @@ A list of all deployed images (including pending updates and pinned deployments)
 
 ## Change Logs
 
-Changelogs for Theledora are published to https://tups.theleruby.com/
+Changelogs for Theledora are published to https://tups.theledora.org/
 
 ## Documentation
 
