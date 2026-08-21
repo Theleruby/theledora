@@ -92,7 +92,7 @@ Miscellaneous:
 * JavaFX 8, required by Minecraft 1.7.10
 * Java 25, for running newer Java programs
 * Mercurial and TortoiseHg (including dulwich for hg-git)
-* .NET runtime 8.x and 10.
+* .NET runtime 8.x and 10.x
 * Optional GTK and QT dependency packages, without which some programs were not working as expected
 * python3-devel (without this, many pip packages fail to install)
 * Various fonts normally found on Windows but not Linux
