@@ -77,6 +77,7 @@ KDE:
 * Gwenview image viewer
 * K3B image burner
 * Kamoso webcam view/capture tool
+* Kate text editor (similar to Notepad++)
 * KCalc calculator
 * KDE games: KPat (solitaire/freecell), KMines (minesweeper), KMahjongg, KReversi, Kiriki (yahtzee), KBlocks (tetris)
 * KDiskMark and QDiskInfo to benchmark disk drives and check their SMART status
