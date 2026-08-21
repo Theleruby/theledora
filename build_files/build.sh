@@ -112,11 +112,11 @@ cat >/usr/lib/fedora-release << EOL
 Theledora release ${MATRIX_FEDORA_VERSION}
 EOL
 
-# this just calls topgrade on desktop. in testing branch it was replaced with a UI program that I'm removing, so this needs reworking
-if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
-  sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
-  sed -i 's/bazzite/theledora/g' /usr/share/applications/system-update.desktop
-fi
+# this was replaced with a UI program that I'm removing, so this needs reworking
+#if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
+#  sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
+#  sed -i 's/bazzite/theledora/g' /usr/share/applications/system-update.desktop
+#fi
 #======================================
 
 # print file contents for debugging
@@ -131,9 +131,9 @@ if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
   cat /etc/gamemode-news-hook.conf
 fi
 cat /usr/lib/fedora-release
-if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
-  cat /usr/share/applications/system-update.desktop
-fi
+#if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
+#  cat /usr/share/applications/system-update.desktop
+#fi
 
 #======================================
 
@@ -328,7 +328,7 @@ fi
 rm -f /usr/bin/bazzite-rollback-helper
 rm -f /usr/bin/brh
 rm -f /usr/bin/bruh
-if [ "$MATRIX_RELEASE_TYPE" == "development" ]; then
+if [ "$MATRIX_FEDORA_EDITION" == "44" ]; then
   dnf5 -y remove bazzite-updater
 fi
 rm -f /usr/share/applications/bazzite-documentation.desktop
