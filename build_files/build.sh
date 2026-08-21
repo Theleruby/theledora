@@ -138,6 +138,42 @@ cat >/etc/sudoers.d/enable-pwfeedback << EOL
 Defaults pwfeedback
 EOL
 
+# remove unwanted ujust commands
+cat >>/usr/share/ublue-os/justfile << EOL
+
+[private]
+toggle-nvk:
+    @echo "Unsupported on Theledora"
+
+[private]
+get-decky-bazzite-buddy:
+    @echo "Unsupported on Theledora"
+
+[private]
+add-updater-to-steam:
+    @echo "Unsupported on Theledora"
+
+[private]
+password-feedback:
+    @echo "Unsupported on Theledora"
+
+[private]
+changelogs:
+    @echo "Unsupported on Theledora"
+
+[private]
+changelogs-testing:
+    @echo "Unsupported on Theledora"
+
+[private]
+restore-bazzite-breeze-gtk-theme:
+    @echo "Unsupported on Theledora"
+
+[private]
+verify-image:
+    @echo "Unsupported on Theledora"
+EOL
+
 #======================================
 
 # print file contents for debugging
