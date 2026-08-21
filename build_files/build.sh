@@ -112,11 +112,32 @@ cat >/usr/lib/fedora-release << EOL
 Theledora release ${MATRIX_FEDORA_VERSION}
 EOL
 
-# this was replaced with a UI program that I'm removing, so this needs reworking
-#if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
-#  sed -i 's/Bazzite,/Theledora,/g' /usr/share/applications/system-update.desktop
-#  sed -i 's/bazzite/theledora/g' /usr/share/applications/system-update.desktop
-#fi
+# this was replaced with a UI program (bazzite-updater) that I'm removing as it hasn't been updated for Theledora yet
+# put the shortcut back for now as it will still work
+cat >/usr/share/applications/system-update.desktop << EOL
+[Desktop Entry]
+Type=Application
+Name=System Update
+Name[cs]=Aktualizace systému
+Name[fr]=Mises à jour
+Name[el]=Ενημέρωση συστήματος
+Name[ru]=Обновление системы
+Comment=Update Theledora, Flatpaks, and more
+Comment[cs]=Aktualizace Theledora, Flatpaků a dalších
+Comment[fr]=Met à jour Theledora, les applications et plus encore
+Comment[el]=Ενημερώνει το Theledora, τα Flatpaks και άλλα
+Comment[ru]=Обновить Theledora, Flatpak и многое другое
+Icon=/usr/share/ublue-os/theledora/update.svg
+Categories=ConsoleOnly;System;
+Terminal=true
+Exec=/usr/bin/ujust update
+EOL
+
+# display sudo password feedback by default
+cat >/etc/sudoers.d/enable-pwfeedback << EOL
+Defaults pwfeedback
+EOL
+
 #======================================
 
 # print file contents for debugging
@@ -180,11 +201,6 @@ dnf5 install -y easyeffects calf lv2 lv2-calf-plugins lv2-mdala-plugins lv2-zam-
 # alsa plugin for dolby digital
 dnf5 install -y alsa-plugins-a52
 
-# downgrade broken alsa-ucm package
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 -y swap alsa-ucm https://kojipkgs.fedoraproject.org//packages/alsa-lib/1.2.15.3/4.fc44/noarch/alsa-ucm-1.2.15.3-4.fc44.noarch.rpm
-fi
-
 # libdvdcss for dvd playback
 dnf5 install -y libdvdcss
 
@@ -203,9 +219,6 @@ dnf5 install -y firefox --allowerasing
 
 # mercurial
 dnf5 install -y mercurial tortoisehg python3-dulwich kdiff3
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 -y swap mercurial https://kojipkgs.fedoraproject.org//packages/mercurial/7.1.1/2.fc43/x86_64/mercurial-7.1.1-2.fc43.x86_64.rpm
-fi
 
 # fluidsynth
 dnf5 install -y fluidsynth fluid-soundfont-common fluid-soundfont-gm
@@ -328,7 +341,7 @@ fi
 rm -f /usr/bin/bazzite-rollback-helper
 rm -f /usr/bin/brh
 rm -f /usr/bin/bruh
-if [ "$MATRIX_FEDORA_EDITION" == "44" ]; then
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
   dnf5 -y remove bazzite-updater
 fi
 rm -f /usr/share/applications/bazzite-documentation.desktop
