@@ -150,17 +150,17 @@ jobs:
         #  release_type: development
 
         #===================================
-        # gamescope 43 stable
+        # gamescope 43 stable. now obsolete
         #===================================
-        - type: gamescope
-          variant: gamescope
-          parent_image: bazzite-deck
-          tag: stable-43
-          tag2: stable
-          tag3: none
-          fedora_version: 43
-          fedora_edition: kinoite
-          release_type: stable
+        #- type: gamescope
+        #  variant: gamescope
+        #  parent_image: bazzite-deck
+        #  tag: stable-43
+        #  tag2: none
+        #  tag3: none
+        #  fedora_version: 43
+        #  fedora_edition: kinoite
+        #  release_type: stable
 
         #===================================
         # gamescope 44 stable
@@ -169,7 +169,7 @@ jobs:
           variant: gamescope
           parent_image: bazzite-deck
           tag: stable-44
-          tag2: none
+          tag2: stable
           tag3: none
           fedora_version: 44
           fedora_edition: kinoite
