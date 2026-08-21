@@ -79,7 +79,7 @@ KDE:
 * Kamoso webcam view/capture tool
 * Kate text editor (similar to Notepad++)
 * KCalc calculator
-* KDE games: KPat (solitaire/freecell), KMines (minesweeper), KMahjongg, KReversi, Kiriki (yahtzee), KBlocks (tetris)
+* KDE games: KPat (solitaire/freecell), KMines (minesweeper), KMahjongg, KReversi, KSudoku, Kiriki (yahtzee), Kapman (pacman), KBlocks (tetris), KBounce (jezzball), KNights (chess), Palapeli (jigsaw)
 * KDiskMark and QDiskInfo to benchmark disk drives and check their SMART status
 * Krusader for managing files on remote devices (similar to WinSCP or Filezilla)
 * Okular PDF viewer

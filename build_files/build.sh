@@ -226,8 +226,8 @@ dnf5 install -y mediawriter
 # kde applications
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
   dnf5 install -y filelight gwenview kcalc okular
-  dnf5 install -y kolourpaint krita kdenlive kamoso skanpage haruna kcolorchooser kcharselect k3b okteta
-  dnf5 install -y kpat kmahjongg kiriki kreversi kblocks kmines
+  dnf5 install -y kolourpaint krita kdenlive kamoso skanpage haruna kcolorchooser kcharselect k3b okteta kclock kweather
+  dnf5 install -y kpat kmahjongg kiriki kreversi kblocks kmines ksudoku kapman kbounce knights palapeli
   rm -f /usr/share/applications/gcdmaster.desktop
 fi
 
