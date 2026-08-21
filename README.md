@@ -31,7 +31,7 @@ All queries and legal notices which are not directly related to the customizatio
 Because Theledora uses Bazzite as its upstream image, it has most of Bazzite's features. However, it also comes with its own set of extra packages. The list below tries to collect all the main features from both Bazzite and Theledora into a fairly thorough list. While not exhaustive, it should give you an idea of what to expect.
 
 Kernel and drivers:
-* Immutable OS based on Fedora Kinoite which uses bootc and rpm-ostree for deployment, making it extremely difficult to brick your system
+* Atomic semi-immutable OS based on Fedora Kinoite which uses bootc and rpm-ostree for deployment, making it extremely difficult to brick your system
 * Open Gaming Collective kernel, with various gaming-related performance improvements and support for almost all relatively modern hardware
 * HDR and VRR display support
 * HDMI CEC support
