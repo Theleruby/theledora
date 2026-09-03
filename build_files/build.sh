@@ -240,6 +240,9 @@ dnf5 install -y alsa-plugins-a52
 # libdvdcss for dvd playback
 dnf5 install -y libdvdcss
 
+# hauppauge wintv firmware, required for decoding video signal (pcie driver is already in kernel)
+dnf5 install -y dvb-firmware-nonfree
+
 # required for mounting windows dynamic disk volumes
 dnf5 install -y libldm
 
