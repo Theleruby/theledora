@@ -30,8 +30,12 @@ All queries and legal notices which are not directly related to the customizatio
 
 Because Theledora uses Bazzite as its upstream image, it has most of Bazzite's features. However, it also comes with its own set of extra packages. The list below tries to collect all the main features from both Bazzite and Theledora into a fairly thorough list. While not exhaustive, it should give you an idea of what to expect.
 
-Kernel and drivers:
+Atomic desktop:
 * Atomic semi-immutable OS based on Fedora Kinoite which uses bootc and rpm-ostree for deployment, making it extremely difficult to brick your system
+* Daily automatic updates which are neither invasive nor annoying - you shouldn't even notice they're happening (desktop image only)
+* Easily pin OS images and roll back to the previous image or to an earlier pinned version if an update does cause an issue
+
+Kernel and drivers:
 * Open Gaming Collective kernel, with various gaming-related performance improvements and support for almost all relatively modern hardware
 * HDR and VRR display support
 * HDMI CEC support
@@ -39,7 +43,6 @@ Kernel and drivers:
 * Xbox controller driver
 
 Useful stuff:
-* Daily automatic updates which are neither invasive nor annoying - you shouldn't even notice they're happening (desktop image only)
 * Bazaar app store used to install flatpaks from Flathub
 * Distrobox
 * Homebrew managed by Bold Brew
