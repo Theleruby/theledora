@@ -370,7 +370,10 @@ X-Desktop-File-Install-Version=0.28
 EOL
 
 # .net runtimes
-dnf5 install -y dotnet-runtime-8.0 dotnet-runtime-10.0
+if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+  dnf5 install -y dotnet-runtime-8.0
+fi
+dnf5 install -y dotnet-runtime-10.0
 
 # needed for JFXPanel swing interop, not sure which one as it wasn't clear, so just installing both
 dnf5 install -y gtk2-devel gtk3-devel
@@ -385,7 +388,10 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
   dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
 
   # .net sdk
-  dnf5 install -y dotnet-sdk-8.0 dotnet-sdk-10.0
+  if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
+    dnf5 install -y dotnet-sdk-8.0
+  fi
+  dnf5 install -y dotnet-sdk-10.0
 
   # mysql
   dnf5 install -y mariadb-devel mariadb-connector-c-doc
