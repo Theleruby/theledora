@@ -19,12 +19,22 @@ All queries and legal notices which are not directly related to the customizatio
 
 ## Available images
 
-| Variant | Upstream image | Purpose | Compatible GPU | Desktop environment | Gamescope session | Testing branch |
+| Variant | Upstream image | Purpose | Compatible GPU | Desktop environment | Gamescope session | Test builds |
 |--|--|--|--|--|--|--|
 | desktop | bazzite | Desktop PC | AMD or Intel GPU | KDE Plasma  (kinoite) | No | No |
 | desktop-nvidia-open | bazzite-nvidia-open | Desktop PC | NVIDIA GPU<br/>(1600 series or later) | KDE Plasma  (kinoite) | No | Yes |
 | desktop-nvidia-legacy | bazzite-nvidia | Desktop PC | NVIDIA GPU<br/>(GTX 900 or 1000 series) | KDE Plasma  (kinoite) | No | No |
 | gamescope | bazzite-deck | Handheld or HTPC | AMD GPU<br/>(RX 400 series or later) | KDE Plasma  (kinoite) | Yes | Yes |
+
+## Available tags
+
+Images which don't have test builds will only have "stable" and "stable-x" tags where x is the supported Fedora version.
+
+Images which DO have test builds will also have "testing", "testing-x" and "latest" builds tagged. Testing is based on upstream Bazzite testing branch. Latest is based on new Fedora version.
+
+In general you should always be using "stable" tag. People using this tag will be upgraded to future Fedora versions automatically once I'm happy they are working properly.
+
+Don't use testing or latest, they aren't suitable for production use and are normally unfinished or untested builds.
 
 ## Features
 

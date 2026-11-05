@@ -10,7 +10,7 @@ download_and_verify() {
     local url="$1"
     local destination="$2"
     local expected_sha256="$3"
-    wget -O "$destination" "$url"
+    wget --no-hsts -O "$destination" "$url"
     if ! echo "${expected_sha256}  ${destination}" | sha256sum -c --status; then
         echo "ERROR: SHA256 verification failed for $destination" >&2
         rm -f "$destination"
@@ -106,7 +106,7 @@ cp /ctx/misc/ublue-motd /usr/libexec/ublue-motd
 chmod +x /usr/libexec/ublue-motd
 
 # gamemode news hook announcements. currently borked
-if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
+if [ "$MATRIX_TYPE" == "gamescope" ]; then
   sed -i "s|^github = .*|github = https://tups.theledora.org/api/announcements/theledora/${GITHUB_BRANCH}/updates.json|" /etc/gamemode-news-hook.conf
 fi
 
@@ -118,7 +118,7 @@ if [ "$MATRIX_TYPE" == "gamescope" ]; then
 fi
 
 # fix update version being displayed (os parse error)
-if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
+if [ "$MATRIX_TYPE" == "gamescope" ]; then
   rm -f /usr/libexec/ogc/os-update
   cp /ctx/misc/os-update /usr/libexec/ogc/os-update
 fi
@@ -200,7 +200,7 @@ if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
   cat /usr/bin/upstream-image-id
   cat /etc/xdg/kcm-about-distrorc
 fi
-if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-44" ]; then
+if [ "$MATRIX_TYPE" == "gamescope" ]; then
   cat /etc/gamemode-news-hook.conf
 fi
 cat /usr/lib/fedora-release
@@ -217,9 +217,7 @@ mkdir -p /var/opt
 dnf5 install -y fedora-workstation-repositories
 
 # make sure rpmfusion is enabled
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${MATRIX_FEDORA_VERSION}.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${MATRIX_FEDORA_VERSION}.noarch.rpm
-fi
+dnf5 install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${MATRIX_FEDORA_VERSION}.noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${MATRIX_FEDORA_VERSION}.noarch.rpm
 dnf5 config-manager setopt rpmfusion-free.enabled=1
 dnf5 config-manager setopt rpmfusion-free-updates.enabled=1
 dnf5 config-manager setopt rpmfusion-nonfree.enabled=1
@@ -396,18 +394,11 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
   dnf5 install -y ImageMagick-devel
 fi
 
-# remove HHD as I don't need it. this was removed in bazzite 44 anyway.
-if [ "$MATRIX_TYPE-$MATRIX_FEDORA_VERSION" == "gamescope-43" ]; then
-  dnf5 -y remove hhd hhd-ui
-fi
-
 # remove stuff that's specific to bazzite and not relevant to theledora. some of this I should probably replace with an equivalent at some point
 rm -f /usr/bin/bazzite-rollback-helper
 rm -f /usr/bin/brh
 rm -f /usr/bin/bruh
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 -y remove bazzite-updater
-fi
+dnf5 -y remove bazzite-updater
 rm -f /usr/share/applications/bazzite-documentation.desktop
 rm -f /usr/share/applications/discourse.desktop
 dnf5 -y remove bazzite-portal
