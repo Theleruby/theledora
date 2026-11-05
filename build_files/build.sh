@@ -3,6 +3,22 @@
 set -euxo pipefail
 
 #======================================
+# useful functions
+#======================================
+
+download_and_verify() {
+    local url="$1"
+    local destination="$2"
+    local expected_sha256="$3"
+    wget -O "$destination" "$url"
+    if ! echo "${expected_sha256}  ${destination}" | sha256sum -c --status; then
+        echo "ERROR: SHA256 verification failed for $destination" >&2
+        rm -f "$destination"
+        exit 1
+    fi
+}
+
+#======================================
 # apply branding
 #======================================
 
@@ -268,7 +284,9 @@ dnf5 install -y audacious audacious-plugins audacious-plugins-freeworld libopenm
 # vlc
 dnf5 install -y vlc vlc-plugins-all vlc-plugin-kde vlc-plugin-notify vlc-plugin-pipewire
 if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 install -y https://stuff.theleruby.com/rpm/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
+  download_and_verify https://stuff.theleruby.com/rpm/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm /tmp/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm b9ccc36d11d71e1d1dac9ea028fdce2526884999b80bb07323ce72765b114473
+  dnf5 install -y /tmp/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
+  rm -f /tmp/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
 else
   dnf5 install -y vlc-plugins-freeworld
 fi
@@ -296,9 +314,9 @@ dnf5 install -y audacity-freeworld
 # avidemux
 if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
 # broken on bazzite 44 now. use appimage
-wget https://stuff.theleruby.com/AppImage/Avidemux-x86_64_20260727.AppImage -O /usr/bin/avidemux.AppImage
+download_and_verify https://stuff.theleruby.com/AppImage/Avidemux-x86_64_20260727.AppImage /usr/bin/avidemux.AppImage 07424136ef41ea23a2a5128b1681f99ad6ef9245fccf6541d5a836f2628ae49f
 chmod +x /usr/bin/avidemux.AppImage
-wget https://stuff.theleruby.com/AppImage/org.avidemux.Avidemux.png -O /usr/share/icons/hicolor/128x128/apps/org.avidemux.Avidemux.png
+download_and_verify https://stuff.theleruby.com/AppImage/org.avidemux.Avidemux.png /usr/share/icons/hicolor/128x128/apps/org.avidemux.Avidemux.png e0685a5631f40624692e2b032e002f28342c038bc6e9821000a272c6ae293028
 cat >/usr/share/applications/org.avidemux.Avidemux.desktop << EOL
 [Desktop Entry]
 Name=Avidemux
@@ -315,8 +333,15 @@ else
   dnf5 install -y avidemux
 fi
 
+# deno
+download_and_verify https://stuff.theleruby.com/bin/deno-2.9.8.bin /usr/bin/deno 368bca08999e02c6911b8f248167b582276b1f547db5712b6e736d7eda1dbda7
+chmod +x /usr/bin/deno
+
 # krusader
 dnf5 install -y krusader
+
+# mp3gain
+dnf5 install -y mp3gain
 
 # disk utils similar to crystaldisk
 dnf5 install -y kdiskmark
@@ -352,6 +377,9 @@ dnf5 install -y dotnet-runtime-8.0 dotnet-runtime-10.0
 # needed for JFXPanel swing interop, not sure which one as it wasn't clear, so just installing both
 dnf5 install -y gtk2-devel gtk3-devel
 
+# node.js
+dnf5 install -y nodejs nodejs-npm
+
 # stuff specific to desktop variants
 if [ "$MATRIX_TYPE" == "desktop" ]; then
   # docker
@@ -360,9 +388,6 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
 
   # .net sdk
   dnf5 install -y dotnet-sdk-8.0 dotnet-sdk-10.0
-
-  # node.js
-  dnf5 install -y nodejs nodejs-npm
 
   # mysql
   dnf5 install -y mariadb-devel mariadb-connector-c-doc
