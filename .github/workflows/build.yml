@@ -50,56 +50,43 @@ jobs:
         #type: [desktop, gamescope]
         #variant: [desktop-nvidia-open, gamescope]
         #parent_image: [bazzite-nvidia-open, bazzite-deck]
-        #tag: [stable-43, stable-44]
+        #tag: [stable-43, stable-44, stable-45]
         #tag2: [stable, none]
         #tag3: [latest, none]
-        #fedora_version: [43, 44]
+        #fedora_version: [43, 44, 45]
         #fedora_edition: [silverblue, kinoite]
         #release_type: [stable, lts, development, experiment]
         include:
 
-        #===================================
-        # desktop 44 stable
-        #===================================
+        #===============================================
+        # desktop 45
+        #===============================================
         - type: desktop
           variant: desktop
           parent_image: bazzite
-          tag: stable-44
+          tag: stable-45
           tag2: stable
           tag3: none
-          fedora_version: 44
+          fedora_version: 45
           fedora_edition: kinoite
           release_type: stable
 
-        #===================================
-        # desktop nvidia open 44 stable
-        #===================================
-        - type: desktop
-          variant: desktop-nvidia-open
-          parent_image: bazzite-nvidia-open
-          tag: stable-44
-          tag2: stable
-          tag3: none
-          fedora_version: 44
-          fedora_edition: kinoite
-          release_type: stable
-
-        #===================================
-        # desktop nvidia open 45 latest
-        #===================================
+        #===============================================
+        # desktop nvidia open 45 stable,latest
+        #===============================================
         - type: desktop
           variant: desktop-nvidia-open
           parent_image: bazzite-nvidia-open
           tag: stable-45
-          tag2: none
+          tag2: stable
           tag3: latest
           fedora_version: 45
           fedora_edition: kinoite
           release_type: stable
 
-        #===================================
+        #===============================================
         # desktop nvidia open 45 testing
-        #===================================
+        #===============================================
         - type: desktop
           variant: desktop-nvidia-open
           parent_image: bazzite-nvidia-open
@@ -110,40 +97,27 @@ jobs:
           fedora_edition: kinoite
           release_type: development
 
-        #===================================
-        # desktop nvidia legacy 44 stable
-        #===================================
+        #===============================================
+        # desktop nvidia legacy 45
+        #===============================================
         - type: desktop
           variant: desktop-nvidia-legacy
           parent_image: bazzite-nvidia
-          tag: stable-44
+          tag: stable-45
           tag2: stable
           tag3: none
-          fedora_version: 44
+          fedora_version: 45
           fedora_edition: kinoite
           release_type: stable
 
-        #===================================
-        # gamescope 44 stable
-        #===================================
-        - type: gamescope
-          variant: gamescope
-          parent_image: bazzite-deck
-          tag: stable-44
-          tag2: stable
-          tag3: none
-          fedora_version: 44
-          fedora_edition: kinoite
-          release_type: stable
-
-        #===================================
-        # gamescope 45 latest
-        #===================================
+        #===============================================
+        # gamescope 45 stable,latest
+        #===============================================
         - type: gamescope
           variant: gamescope
           parent_image: bazzite-deck
           tag: stable-45
-          tag2: none
+          tag2: stable
           tag3: latest
           fedora_version: 45
           fedora_edition: kinoite
