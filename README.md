@@ -19,6 +19,8 @@ All queries and legal notices which are not directly related to the customizatio
 
 ## Available images
 
+All images are currently based on Fedora/Bazzite 45. Previous images for 43 and 44 are available but aren't being updated any more.
+
 | Variant | Upstream image | Purpose | Compatible GPU | Desktop environment | Gamescope session | Test builds |
 |--|--|--|--|--|--|--|
 | desktop | bazzite | Desktop PC | AMD or Intel GPU | KDE Plasma  (kinoite) | No | No |
