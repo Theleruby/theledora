@@ -373,9 +373,11 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
 fi
 
 # gcr seems to break some stuff on KDE, as it's being used instead of KWallet, but doesn't actually work (agent refused operation)
-# the migration to oo7 was deferred, so this package being left installed on kinoite might be an upstream bug
+# lutris needs it though for some reason. this is probably a fuckup on the lutris package not using gcr-libs
+# instead we just disable globally
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
-  dnf5 -y remove gcr
+   #dnf5 -y remove gcr
+   systemctl --global mask gcr-ssh-agent.service gcr-ssh-agent.socket
 fi
 
 # remove stuff that's specific to bazzite and not relevant to theledora. some of this I should probably replace with an equivalent at some point
