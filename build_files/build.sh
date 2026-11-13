@@ -281,13 +281,7 @@ dnf5 install -y audacious audacious-plugins audacious-plugins-freeworld libopenm
 
 # vlc
 dnf5 install -y vlc vlc-plugins-all vlc-plugin-kde vlc-plugin-notify vlc-plugin-pipewire
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  download_and_verify https://stuff.theleruby.com/rpm/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm /tmp/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm b9ccc36d11d71e1d1dac9ea028fdce2526884999b80bb07323ce72765b114473
-  dnf5 install -y /tmp/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
-  rm -f /tmp/vlc-plugins-freeworld-3.0.22-3.fc45.x86_64.rpm
-else
-  dnf5 install -y vlc-plugins-freeworld
-fi
+dnf5 install -y vlc-plugins-freeworld
 
 # yt-dlp
 dnf5 install -y yt-dlp
@@ -310,26 +304,7 @@ dnf5 install -y https://discord.com/api/download/ptb?platform=linux\&format=rpm
 dnf5 install -y audacity-freeworld
 
 # avidemux
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-# broken on bazzite 44 now. use appimage
-download_and_verify https://stuff.theleruby.com/AppImage/Avidemux-x86_64_20260727.AppImage /usr/bin/avidemux.AppImage 07424136ef41ea23a2a5128b1681f99ad6ef9245fccf6541d5a836f2628ae49f
-chmod +x /usr/bin/avidemux.AppImage
-download_and_verify https://stuff.theleruby.com/AppImage/org.avidemux.Avidemux.png /usr/share/icons/hicolor/128x128/apps/org.avidemux.Avidemux.png e0685a5631f40624692e2b032e002f28342c038bc6e9821000a272c6ae293028
-cat >/usr/share/applications/org.avidemux.Avidemux.desktop << EOL
-[Desktop Entry]
-Name=Avidemux
-GenericName=Video Editor
-Comment=Multiplatform video editor
-Exec=/usr/bin/avidemux.AppImage %f
-Icon=org.avidemux.Avidemux
-Terminal=false
-Type=Application
-Categories=AudioVideo;AudioVideoEditing;Video;
-MimeType=video/mpeg;video/x-mpeg;video/mp4;video/x-m4v;video/quicktime;video/3gp;video/mkv;video/x-matroska;video/webm;video/flv;video/x-flv;video/dv;video/x-msvideo;video/x-ms-wmv;video/x-ms-asf;video/x-anim;
-EOL
-else
-  dnf5 install -y avidemux
-fi
+dnf5 install -y avidemux
 
 # deno
 download_and_verify https://stuff.theleruby.com/bin/deno-2.9.8.bin /usr/bin/deno 368bca08999e02c6911b8f248167b582276b1f547db5712b6e736d7eda1dbda7
@@ -370,10 +345,10 @@ X-Desktop-File-Install-Version=0.28
 EOL
 
 # .net runtimes
-if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-  dnf5 install -y dotnet-runtime-8.0
-fi
 dnf5 install -y dotnet-runtime-10.0
+
+# older python still being used
+dnf5 install -y python3.14
 
 # needed for JFXPanel swing interop, not sure which one as it wasn't clear, so just installing both
 dnf5 install -y gtk2-devel gtk3-devel
@@ -388,9 +363,6 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
   dnf5 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
 
   # .net sdk
-  if [ "$MATRIX_FEDORA_VERSION" == "44" ]; then
-    dnf5 install -y dotnet-sdk-8.0
-  fi
   dnf5 install -y dotnet-sdk-10.0
 
   # mysql
@@ -398,6 +370,12 @@ if [ "$MATRIX_TYPE" == "desktop" ]; then
 
   # imagemagick
   dnf5 install -y ImageMagick-devel
+fi
+
+# gcr seems to break some stuff on KDE, as it's being used instead of KWallet, but doesn't actually work (agent refused operation)
+# the migration to oo7 was deferred, so this package being left installed on kinoite might be an upstream bug
+if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
+  dnf5 -y remove gcr
 fi
 
 # remove stuff that's specific to bazzite and not relevant to theledora. some of this I should probably replace with an equivalent at some point
