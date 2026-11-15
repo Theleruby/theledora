@@ -356,6 +356,11 @@ dnf5 install -y gtk2-devel gtk3-devel
 # node.js
 dnf5 install -y nodejs nodejs-npm
 
+# bolt launcher
+dnf5 config-manager setopt terra.enabled=1
+dnf5 install -y bolt-launcher
+dnf5 config-manager setopt terra.enabled=0
+
 # stuff specific to desktop variants
 if [ "$MATRIX_TYPE" == "desktop" ]; then
   # docker
