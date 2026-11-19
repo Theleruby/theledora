@@ -65,7 +65,7 @@ SUPPORT_END=${SUPPORT_END}
 VARIANT="${MATRIX_VARIANT}"
 VARIANT_ID="${MATRIX_VARIANT}"
 OSTREE_VERSION="${MATRIX_FEDORA_VERSION}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
-BOOTLOADER_NAME="Theledora"
+BOOTLOADER_NAME="Theledora (${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}.${BUILD_RUN_NUMBER})"
 BUILD_ID="${MATRIX_TAG}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
 IMAGE_ID="theledora-${MATRIX_VARIANT}-${MATRIX_TAG}.${BUILD_DATE}.${BUILD_RUN_NUMBER}"
 UPSTREAM_IMAGE_ID=${UPSTREAM_IMAGE_ID}
@@ -166,6 +166,10 @@ get-decky-bazzite-buddy:
     @echo "Unsupported on Theledora"
 
 [private]
+bazzite-cli:
+    @echo "Unsupported on Theledora"
+
+[private]
 add-updater-to-steam:
     @echo "Unsupported on Theledora"
 
@@ -207,6 +211,12 @@ cat /usr/lib/fedora-release
 #if [ "$MATRIX_TYPE-$MATRIX_RELEASE_TYPE" == "desktop-stable" ]; then
 #  cat /usr/share/applications/system-update.desktop
 #fi
+
+#======================================
+
+# changes required for anti-cheat
+echo 'kargs = ["lockdown=integrity"]' > /usr/lib/bootc/kargs.d/10-lockdown.toml
+echo "kernel.kexec_load_disabled = 1" > /usr/lib/sysctl.d/99-disable-kexec.conf
 
 #======================================
 
@@ -305,6 +315,9 @@ dnf5 install -y audacity-freeworld
 
 # avidemux
 dnf5 install -y avidemux
+
+# musescore
+dnf5 install -y musescore
 
 # deno
 download_and_verify https://stuff.theleruby.com/bin/deno-2.9.8.bin /usr/bin/deno 368bca08999e02c6911b8f248167b582276b1f547db5712b6e736d7eda1dbda7
