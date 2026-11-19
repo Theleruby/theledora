@@ -341,11 +341,11 @@ dnf5 install -y gnu-free-fonts-common gnu-free-sans-fonts lpf-cleartype-fonts lp
 rm /usr/share/applications/lpf*.desktop
 
 # java (jdk8 required for minecraft 1.7.10, also install latest)
-dnf5 install -y https://cdn.azul.com/zulu/bin/zulu8.94.0.17-ca-fx-jdk8.0.492-linux.x86_64.rpm
+dnf5 install -y https://cdn.azul.com/zulu/bin/zulu8.98.0.201-ca-fx-jdk8.0.514-linux.x86_64.rpm
 dnf5 install -y java-25-openjdk-devel.x86_64
 cat >/usr/share/applications/java-8-openjdk-jconsole.desktop << EOL
 [Desktop Entry]
-Name=OpenJDK 8 for x86_64 Monitoring & Management Console (8.0.492-zulu8.94.0.17-ca-fx.x86_64)
+Name=OpenJDK 8 for x86_64 Monitoring & Management Console (8.0.514-zulu8.98.0.201-ca-fx.x86_64)
 Comment=Monitor and manage OpenJDK applications
 Exec=/usr/lib/jvm/java-8-zulu-openjdk-jdk-fx/bin/jconsole
 Icon=java-25-openjdk
