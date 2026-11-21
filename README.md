@@ -2,7 +2,7 @@
 
 ## What is Theledora?
 
-Theledora is a customized version of Fedora Atomic Desktop based on Bazzite. I created it so that I could customize the installed packages.
+Theledora is a customized version of Fedora Atomic Desktop based on Bazzite (a gaming-based derivative of Fedora Kinoite). I created it so that I could modify the packages that were installed in the bootc image.
 
 Project objectives:
 * To have a more standardized Linux experience across the various different devices I own, with a standard set of software installed on every machine I use
@@ -16,6 +16,10 @@ These are experimental images which were created for my sole personal use only. 
 I also don't consider Theledora to be its own operating system or distro - apart from the extra preinstalled packages, these bootc images are literally just of Bazzite. The customization of these images is similar to using NTLite to modify a Windows install.wim file, and was done solely to make my Atomic Desktop journey easier, being made necessary because of the particular way in which the Fedora Atomic Desktop works.
 
 All queries and legal notices which are not directly related to the customizations made to these images should therefore be directed towards Universal Blue, the Fedora Project and/or Red Hat (whichever is appropriate).
+
+## Why base this on Bazzite rather than Fedora?
+
+I guess this is the same question as "why install Bazzite rather than Fedora?" and the answer should be pretty obvious. Bazzite comes with a lot of Fedora's common problems already solved, particularly those related to gaming; if I built this on top of Fedora Kinoite directly, I would end up having to either copy those solutions or solve those problems again. At the moment I lack the free time to be able to maintain such an ambitious project, especially when it's just for my own use. It's also much more likely that a project with 100,000 users and a team of maintainers is going to solve those problems in a better way and have the solutions tested more thoroughly.
 
 ## Available images
 
