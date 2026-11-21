@@ -6,7 +6,7 @@ Theledora is a customized version of Fedora Atomic Desktop based on Bazzite. I c
 
 Project objectives:
 * To have a more standardized Linux experience across the various different devices I own, with a standard set of software installed on every machine I use
-* To reduce the need to use flatpaks, distrobox containers and AppImages to install things, which are more inconvenient than using dnf, and introduce extra differences between systems that I would prefer to avoid
+* To reduce the need to use flatpaks, distrobox containers and AppImages to install things, which are more inconvenient than using dnf, introduce various bugs and inconsistencies, and create extra differences between systems that I would prefer to avoid
 * To avoid package conflicts that occur when using rpm-ostree to layer packages
 
 ## Legal notice and disclaimer
