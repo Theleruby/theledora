@@ -406,11 +406,15 @@ dnf5 -y remove bazzite-updater
 rm -f /usr/share/applications/bazzite-documentation.desktop
 rm -f /usr/share/applications/discourse.desktop
 dnf5 -y remove bazzite-portal
+rm -f /etc/skel/.config/autostart/bazzite-portal.desktop
 if [ "$MATRIX_FEDORA_EDITION" == "kinoite" ]; then
   dnf5 -y remove krunner-yafti
 else
   dnf5 -y remove gnome-search-yafti
 fi
+rm -rf /usr/share/ublue-os/announcements
+rm -rf /usr/libexec/bazzite-announcement
+rm -rf /etc/xdg/autostart/bazzite-announcement.desktop
 
 # move stuff in /var/opt to /usr/lib/opt and add symlink to tmpfiles conf
 # taken from https://github.com/astrovm/amyos/blob/main/build_files/fix-opt.sh, thanks <3
