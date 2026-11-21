@@ -416,6 +416,9 @@ rm -rf /usr/share/ublue-os/announcements
 rm -rf /usr/libexec/bazzite-announcement
 rm -rf /etc/xdg/autostart/bazzite-announcement.desktop
 
+# string swap
+sed -i 's/sender="Bazzite"/sender="NTFS Service"/g' /usr/libexec/ntfs-exfat-monitor-script
+
 # move stuff in /var/opt to /usr/lib/opt and add symlink to tmpfiles conf
 # taken from https://github.com/astrovm/amyos/blob/main/build_files/fix-opt.sh, thanks <3
 for dir in /var/opt/*/; do
