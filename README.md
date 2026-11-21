@@ -53,6 +53,7 @@ Kernel and drivers:
 * HDMI CEC support
 * Latest NVIDIA display driver (NVIDIA image only)
 * Xbox controller driver
+* Hauppauge WinTV firmware
 
 Useful stuff:
 * Bazaar app store used to install flatpaks from Flathub
@@ -62,18 +63,21 @@ Useful stuff:
 
 Gaming:
 * Steam and Lutris preinstalled
+* Bolt Launcher for OSRS
 * Input Remapper which allows you to change the behaviour of various input devices
+* Kernel settings for Easy Anti-Cheat Linux v2 pre-enabled (this should just-work-TM)
 
 Multimedia:
 * All the main audio and video codecs, including hardware accelerated support for H264 decoding
 * Audacious audio player
 * Audacity audio editor
-* Avidemux video cutting/filtering/re-encoding tool
+* Avidemux (video cutting/filtering/re-encoding tool)
 * EasyEffects, required for audio not to sound like junk
 * FluidSynth for playing MIDIs, required by OpenTTD
 * Haruna to watch videos, with VLC as a fallback option
 * Kdenlive video editor
 * libdvdcss, required to play DVDs
+* MuseScore (sheet music authoring and playback tool)
 * yt-dlp to download audio and video
 
 Image editing:
@@ -103,11 +107,13 @@ KDE:
 
 Miscellaneous:
 * CLI commands which Fedora should have included out of the box, but didn't for some reason (e.g. htop, execstack, puttygen)
+* Firejail
 * libldm, used for mounting Windows Dynamic Disks
 * JavaFX 8, required by Minecraft 1.7.10
 * Java 25, for running newer Java programs
 * Mercurial and TortoiseHg (including dulwich for hg-git)
-* .NET runtime 8.x and 10.x
+* .NET runtime
+* Node.js and Deno
 * Optional GTK and QT dependency packages, without which some programs were not working as expected
 * python3-devel (without this, many pip packages fail to install)
 * Various fonts normally found on Windows but not Linux
@@ -117,7 +123,6 @@ Miscellaneous:
 Developer packages (desktop version only):
 * Docker
 * .NET SDK
-* Node.js
 * ImageMagick headers
 * MariaDB C++ connector
 
